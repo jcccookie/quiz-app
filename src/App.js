@@ -12,8 +12,15 @@ function App() {
     );
   };
 
-  const handleLogout = () => {
-    axios.get("http://localhost:8080/logout");
+  const handleLogoutButton = () => {
+    axios
+      .get("http://localhost:8080/logout")
+      .then((res) => {
+        console.log(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -21,7 +28,9 @@ function App() {
       {["/", "/home", "/dashboard"].map((path) => (
         <Route key={path} exact path={path}>
           <Link to="/login">Login Page</Link>
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button variant="primary" onClick={handleLogoutButton}>
+            Logout
+          </Button>
         </Route>
       ))}
       <Route exact path="/login">
