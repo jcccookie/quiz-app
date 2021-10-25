@@ -3,6 +3,7 @@ import axios from "axios";
 import GoogleButton from "react-google-button";
 import { Link, Route, Switch } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import CreateQuiz from "./CreateQuiz";
 
 function App() {
   const handleGoogleLoginButton = () => {
@@ -39,6 +40,7 @@ function App() {
       <Route exact path="/login/error">
         Login Error!
       </Route>
+      <Route path="/createQuiz/:employee_id" children={<CreateQuiz />} />
     </Switch>
   );
 }
