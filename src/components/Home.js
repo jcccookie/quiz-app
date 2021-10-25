@@ -4,9 +4,10 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  align-center: center;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
+  gap: 10px;
 `;
 
 function Home() {
