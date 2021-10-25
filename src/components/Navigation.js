@@ -9,6 +9,7 @@ function Navigation() {
         <Nav>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <Nav.Link href="http://localhost:8080/auth/google">Sign In</Nav.Link>
+          <Nav.Link href="http://localhost:8080/logout">Log Out</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

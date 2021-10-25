@@ -1,8 +1,18 @@
 import React from "react";
 import axios from "axios";
 import { Route, Switch } from "react-router-dom";
+import styled from "styled-components";
+
+import Home from "./components/Home";
 import Navigation from "./components/Navigation";
 import Dashboard from "./components/Dashboard";
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+`;
 
 function App() {
   const handleLogoutButton = () => {
@@ -20,14 +30,19 @@ function App() {
     <>
       <Navigation />
       <Switch>
-        {["/", "/home", "/dashboard"].map((path) => (
-          <Route key={path} exact path={path}>
+        <Container>
+          {["/", "/home"].map((path) => (
+            <Route key={path} exact path={path}>
+              <Home />
+            </Route>
+          ))}
+          <Route exact path="/dashboard">
             <Dashboard />
           </Route>
-        ))}
-        <Route exact path="/login/error">
-          Login Error!
-        </Route>
+          <Route exact path="/login/error">
+            Login Error!
+          </Route>
+        </Container>
       </Switch>
     </>
   );
