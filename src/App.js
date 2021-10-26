@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Home from "./components/Home";
 import Navigation from "./components/Navigation";
 import Dashboard from "./components/Dashboard";
-import NewQuiz from "./NewQuiz";
+import NewQuiz from "./components/NewQuiz";
 
 const Container = styled.div`
   display: flex;
