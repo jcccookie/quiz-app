@@ -11,10 +11,15 @@ const Container = styled.div`
 `;
 
 function Home() {
+  let employee_id = "12345";
+  let extension = "/newQuiz/" + employee_id;
+
   return (
     <Container>
       <h1>Create your first quiz!</h1>
-      <Button className="text-uppercase">Create Quiz</Button>
+      <Button href={extension} className="text-uppercase">
+        Create Quiz
+      </Button>
     </Container>
   );
 }
