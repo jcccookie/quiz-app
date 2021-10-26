@@ -18,7 +18,7 @@ const Container = styled.div`
 function App() {
   const handleLogoutButton = () => {
     axios
-      .get("http://localhost:8080/logout")
+      .get(`${process.env.REACT_APP_SERVER_HOST}/logout`)
       .then((res) => {
         console.log(res.data.message);
       })

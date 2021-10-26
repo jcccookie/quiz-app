@@ -8,8 +8,12 @@ function Navigation() {
         <Navbar.Brand href="/">Software Programming Quiz</Navbar.Brand>
         <Nav>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-          <Nav.Link href="http://localhost:8080/auth/google">Sign In</Nav.Link>
-          <Nav.Link href="http://localhost:8080/logout">Log Out</Nav.Link>
+          <Nav.Link href={`${process.env.REACT_APP_SERVER_HOST}/auth/google`}>
+            Sign In
+          </Nav.Link>
+          <Nav.Link href={`${process.env.REACT_APP_SERVER_HOST}/logout`}>
+            Log Out
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>
