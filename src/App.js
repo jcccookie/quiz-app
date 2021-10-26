@@ -1,6 +1,4 @@
 import React from "react";
-import axios from "axios";
-
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./components/Home";
@@ -16,17 +14,6 @@ const Container = styled.div`
 `;
 
 function App() {
-  const handleLogoutButton = () => {
-    axios
-      .get("http://localhost:8080/logout")
-      .then((res) => {
-        console.log(res.data.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <>
       <Navigation />
