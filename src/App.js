@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+
 
 import Home from "./components/Home";
 import Navigation from "./components/Navigation";
@@ -27,6 +29,7 @@ function App() {
   };
 
   return (
+
     <>
       <Navigation />
       <Switch>
@@ -42,6 +45,7 @@ function App() {
           <Route exact path="/login/error">
             Login Error!
           </Route>
+          <Route path="/newQuiz/:employee_id" children={<NewQuiz />} />
         </Container>
       </Switch>
     </>
