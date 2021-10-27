@@ -11,13 +11,12 @@ const Container = styled.div`
 `;
 
 function Home() {
-  let employee_id = "12345";
-  let extension = "/newQuiz/" + employee_id;
+  let employee_id = "5660188736487424";
 
   return (
     <Container>
       <h1>Create your first quiz!</h1>
-      <Button href={extension} className="text-uppercase">
+      <Button href={"/newQuiz/" + employee_id} className="text-uppercase">
         Create Quiz
       </Button>
     </Container>
