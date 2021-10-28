@@ -2,7 +2,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import NewQuizBasicInfoForm from "./NewQuizBasicInfoForm";
-
+import NewQuestion from "./NewQuestion";
 
 function NewQuiz() {
   let { employee_id } = useParams();
@@ -25,12 +25,7 @@ function NewQuiz() {
               setQuizID={setQuizID}
             />
           ) : (
-            <div>
-              <h2>Quiz Title: {title}</h2>
-              <h2>Quiz Time Limit: {timeLimit}</h2>
-              <h2>Quiz ID: {quizID}</h2>
-              <h2>Add Question Component Placeholder</h2>
-            </div>
+            <NewQuestion title={title} timeLimit={timeLimit} quizID={quizID} />
           )}
         </Col>
       </Row>

@@ -15,8 +15,6 @@ function NewQuizBasicInfoForm(props) {
 
   const formSubmissionHandlerBasicInformation = async (event) => {
     event.preventDefault();
-    console.log(props.title);
-    console.log(props.timeLimit);
 
     // call POST request to api to make quiz
     const response = await axios({
