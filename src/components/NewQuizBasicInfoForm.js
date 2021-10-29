@@ -65,6 +65,7 @@ function NewQuizBasicInfoForm(props) {
                 min="1"
               />
             </Form.Group>
+            <Col className="text-center">
             {!loading && (
               <Button variant="primary" type="submit">
                 Add Questions
@@ -75,6 +76,7 @@ function NewQuizBasicInfoForm(props) {
                 <Spinner animation="border" role="status" size="sm" />
               </Button>
             )}
+            </Col>
           </Form>
         </Col>
       </Row>

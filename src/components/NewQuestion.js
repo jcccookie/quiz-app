@@ -9,9 +9,11 @@ import {
 } from "react-bootstrap";
 
 function NewQuestion(props) {
+
   // new True False Question
   function newTrueFalseQuestion() {
     console.log("new true false question");
+    props.setQuestionType(1);
   }
 
   // new multiple choice question
@@ -43,7 +45,7 @@ function NewQuestion(props) {
                   <DropdownButton
                     className="text-center"
                     variant="primary"
-                    title="Add New Question"
+                    title="Add Question"
                   >
                     <Dropdown.Item eventKey="1" onClick={newTrueFalseQuestion}>
                       True/False
@@ -66,7 +68,9 @@ function NewQuestion(props) {
                   </DropdownButton>
                 </Col>
                 <Col className="text-center">
-                  <Button variant="success">Submit Quiz</Button>
+                  <Button variant="success" disabled={!props.questionAdded}>
+                    Submit Quiz
+                  </Button>
                 </Col>
                 <Col className="text-center">
                   <Button variant="danger">Delete Quiz</Button>
