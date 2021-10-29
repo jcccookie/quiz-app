@@ -1,9 +1,14 @@
-import { Container, Form, Row, Col, Button } from "react-bootstrap";
+import { Container, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 const axios = require("axios").default;
 
 function NewQuizBasicInfoForm(props) {
+  // employee_id params
   let { employee_id } = useParams();
+
+  // state
+  const [loading, setLoading] = useState(false);
 
   const titleInputChangeHandler = (event) => {
     props.setTitle(event.target.value);
@@ -15,8 +20,7 @@ function NewQuizBasicInfoForm(props) {
 
   const formSubmissionHandlerBasicInformation = async (event) => {
     event.preventDefault();
-    console.log(props.title);
-    console.log(props.timeLimit);
+    setLoading(true);
 
     // call POST request to api to make quiz
     const response = await axios({
@@ -34,6 +38,7 @@ function NewQuizBasicInfoForm(props) {
 
     // set quizID to id returned from POST request
     props.setQuizID(response["data"]["id"]);
+    setLoading(false);
   };
 
   return (
@@ -60,9 +65,18 @@ function NewQuizBasicInfoForm(props) {
                 min="1"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Add Questions
-            </Button>
+            <Col className="text-center">
+            {!loading && (
+              <Button variant="primary" type="submit">
+                Add Questions
+              </Button>
+            )}
+            {loading && (
+              <Button variant="primary" type="submit">
+                <Spinner animation="border" role="status" size="sm" />
+              </Button>
+            )}
+            </Col>
           </Form>
         </Col>
       </Row>
