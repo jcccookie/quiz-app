@@ -7,8 +7,16 @@ import {
   DropdownButton,
   Dropdown,
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
+const axios = require("axios").default;
 
 function NewQuestion(props) {
+  // for redirecting on submit quiz and delete quiz buttons
+  let history = useHistory();
+
+  // state
+  const [loading, setLoading] = useState(false);
 
   // new True False Question
   function newTrueFalseQuestion() {
@@ -30,6 +38,23 @@ function NewQuestion(props) {
   function newFreeFormQuestion() {
     console.log("new free form question");
   }
+
+  // delete quiz when delete quiz button clicked - redirect to create quiz page
+  const onClickDeleteQuiz = async () => {
+    // call DELETE request to api to delete quiz
+    const deleteURL =
+      "https://cs467quizcreation.wl.r.appspot.com/quiz/" + props.quizID;
+
+    await axios({
+      method: "delete",
+      url: deleteURL,
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    // go back to home page after delete is done
+    history.push("/");
+  };
 
   return (
     <Container className="content">
@@ -73,7 +98,9 @@ function NewQuestion(props) {
                   </Button>
                 </Col>
                 <Col className="text-center">
-                  <Button variant="danger">Delete Quiz</Button>
+                  <Button variant="danger" onClick={onClickDeleteQuiz}>
+                    Delete Quiz
+                  </Button>
                 </Col>
               </Row>
             </Card.Body>
