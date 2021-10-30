@@ -1,4 +1,12 @@
-import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
+import {
+  Container,
+  Col,
+  Row,
+  Form,
+  Button,
+  Card,
+  Spinner,
+} from "react-bootstrap";
 import { useState } from "react";
 const axios = require("axios").default;
 
@@ -7,10 +15,12 @@ function TrueFalseQuestion(props) {
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
   const [questionAnswer, setQuestionAnswer] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // on submit button for form
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     // send post request to database to create new question
     const response = await axios({
@@ -42,11 +52,14 @@ function TrueFalseQuestion(props) {
       console.log(error);
     });
 
-    console.log(res);
+    // setQuiz with updated quiz
+    props.setQuiz(res["data"]);
+    console.log(res["data"]);
 
     // once post request is complete - reset the form
     props.setQuestionAdded(true);
     props.setQuestionType(0);
+    setLoading(false);
   };
 
   // on clicking cancel button in form
@@ -120,13 +133,20 @@ function TrueFalseQuestion(props) {
                     </Button>
                   </Col>
                   <Col className="text-center">
-                    <Button
-                      variant="warning"
-                      type="button"
-                      onClick={onClickCancel}
-                    >
-                      Cancel
-                    </Button>
+                    {!loading && (
+                      <Button
+                        variant="warning"
+                        type="button"
+                        onClick={onClickCancel}
+                      >
+                        Cancel
+                      </Button>
+                    )}
+                    {loading && (
+                      <Button variant="primary" type="submit">
+                        <Spinner animation="border" role="status" size="sm" />
+                      </Button>
+                    )}
                   </Col>
                 </Row>
               </Form>

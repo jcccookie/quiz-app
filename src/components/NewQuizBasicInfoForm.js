@@ -36,6 +36,8 @@ function NewQuizBasicInfoForm(props) {
       console.log(error);
     });
 
+    props.setQuiz(response["data"]);
+
     // set quizID to id returned from POST request
     props.setQuizID(response["data"]["id"]);
     setLoading(false);

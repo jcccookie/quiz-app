@@ -13,6 +13,7 @@ function NewQuiz() {
   const [quizID, setQuizID] = useState("");
   const [questionAdded, setQuestionAdded] = useState(false);
   const [questionType, setQuestionType] = useState(0);
+  const [quiz, setQuiz] = useState([]);
 
   return (
     <Container className="question">
@@ -25,6 +26,7 @@ function NewQuiz() {
               setTitle={setTitle}
               setTimeLimit={setTimeLimit}
               setQuizID={setQuizID}
+              setQuiz={setQuiz}
             />
           ) : (
             <NewQuestion
@@ -33,6 +35,7 @@ function NewQuiz() {
               quizID={quizID}
               setQuestionType={setQuestionType}
               questionAdded={questionAdded}
+              quiz={quiz}
             />
           )}
         </Col>
@@ -45,6 +48,7 @@ function NewQuiz() {
               setQuestionAdded={setQuestionAdded}
               setQuestionType={setQuestionType}
               quizID={quizID}
+              setQuiz={setQuiz}
             />
           )}
         </Col>

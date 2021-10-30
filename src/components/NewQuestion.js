@@ -69,6 +69,9 @@ function NewQuestion(props) {
             <Card.Body>
               <Card.Title>Quiz ID: {props.quizID}</Card.Title>
               <Card.Text>Time Limit: {props.timeLimit} minutes</Card.Text>
+              <Card.Text>
+                Current Number of Questions: {props.quiz["question"].length}
+              </Card.Text>
               <Row>
                 <Col className="text-center">
                   <DropdownButton
