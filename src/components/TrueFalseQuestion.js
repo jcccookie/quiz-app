@@ -1,15 +1,33 @@
 import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
+import { useState } from "react";
 
 function TrueFalseQuestion(props) {
+  // state
+  const [question, setQuestion] = useState("");
+  const [radioButton, setRadioButton] = useState(false);
+
+  // on submit button for form
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
     props.setQuestionAdded(true);
     props.setQuestionType(0);
+    console.log(question);
+    console.log(radioButton);
   };
 
+  // on clicking cancel button in form
   const onClickCancel = (event) => {
     event.preventDefault();
     props.setQuestionType(0);
+  };
+
+  // set question state when question is typed in
+  const questionInputChangeHandler = (event) => {
+    setQuestion(event.target.value);
+  };
+
+  const radioButtonInputHandler = (event) => {
+    setRadioButton(true);
   };
 
   return (
@@ -22,13 +40,20 @@ function TrueFalseQuestion(props) {
               <Form onSubmit={formSubmissionHandler}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Question</Form.Label>
-                  <Form.Control type="text" placeholder="Enter question" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter question"
+                    required
+                    onChange={questionInputChangeHandler}
+                  />
                 </Form.Group>
                 <Form.Check
                   type="radio"
                   label="True"
                   name="formHorizontalRadios"
                   id="true"
+                  required
+                  onChange={radioButtonInputHandler}
                 />
                 <Form.Check
                   type="radio"
@@ -49,7 +74,7 @@ function TrueFalseQuestion(props) {
                   <Col className="text-center">
                     <Button
                       variant="warning"
-                      type="submit"
+                      type="button"
                       onClick={onClickCancel}
                     >
                       Cancel
