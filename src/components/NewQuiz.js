@@ -44,6 +44,7 @@ function NewQuiz() {
             <TrueFalseQuestion
               setQuestionAdded={setQuestionAdded}
               setQuestionType={setQuestionType}
+              quizID={quizID}
             />
           )}
         </Col>
