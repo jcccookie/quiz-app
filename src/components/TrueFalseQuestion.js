@@ -124,22 +124,13 @@ function TrueFalseQuestion(props) {
                 </Form.Group>
                 <Row>
                   <Col className="text-center">
-                    <Button
-                      className="text-center"
-                      variant="primary"
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
-                  </Col>
-                  <Col className="text-center">
                     {!loading && (
                       <Button
-                        variant="warning"
-                        type="button"
-                        onClick={onClickCancel}
+                        className="text-center"
+                        variant="primary"
+                        type="submit"
                       >
-                        Cancel
+                        Submit
                       </Button>
                     )}
                     {loading && (
@@ -147,6 +138,15 @@ function TrueFalseQuestion(props) {
                         <Spinner animation="border" role="status" size="sm" />
                       </Button>
                     )}
+                  </Col>
+                  <Col className="text-center">
+                    <Button
+                      variant="warning"
+                      type="button"
+                      onClick={onClickCancel}
+                    >
+                      Cancel
+                    </Button>
                   </Col>
                 </Row>
               </Form>
