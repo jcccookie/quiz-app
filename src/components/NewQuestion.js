@@ -6,6 +6,7 @@ import {
   Button,
   DropdownButton,
   Dropdown,
+  Spinner,
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
@@ -16,7 +17,7 @@ function NewQuestion(props) {
   let history = useHistory();
 
   // state
-  const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   // new True False Question
   function newTrueFalseQuestion() {
@@ -41,6 +42,7 @@ function NewQuestion(props) {
 
   // delete quiz when delete quiz button clicked - redirect to create quiz page
   const onClickDeleteQuiz = async () => {
+    setLoadingDelete(true);
     // call DELETE request to api to delete quiz
     const deleteURL =
       "https://cs467quizcreation.wl.r.appspot.com/quiz/" + props.quizID;
@@ -51,6 +53,8 @@ function NewQuestion(props) {
     }).catch((error) => {
       console.log(error);
     });
+
+    setLoadingDelete(false);
 
     // go back to home page after delete is done
     history.push("/");
@@ -98,9 +102,16 @@ function NewQuestion(props) {
                   </Button>
                 </Col>
                 <Col className="text-center">
-                  <Button variant="danger" onClick={onClickDeleteQuiz}>
-                    Delete Quiz
-                  </Button>
+                  {!loadingDelete && (
+                    <Button variant="danger" onClick={onClickDeleteQuiz}>
+                      Delete Quiz
+                    </Button>
+                  )}
+                  {loadingDelete && (
+                    <Button variant="danger" type="submit">
+                      <Spinner animation="border" role="status" size="sm" />
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </Card.Body>
