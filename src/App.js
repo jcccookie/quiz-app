@@ -18,7 +18,7 @@ function App() {
     <>
       <Navigation />
       <Switch>
-        <Container>
+        <Container className="mainContent">
           {["/", "/home"].map((path) => (
             <Route key={path} exact path={path}>
               <Home />
