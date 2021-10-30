@@ -1,18 +1,36 @@
 import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
 import { useState } from "react";
+const axios = require("axios").default;
 
 function TrueFalseQuestion(props) {
   // state
   const [question, setQuestion] = useState("");
-  const [radioButton, setRadioButton] = useState(false);
+  const [points, setPoints] = useState(0);
+  const [questionAnswer, setQuestionAnswer] = useState(false);
 
   // on submit button for form
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
+
+    // send post request to database to create new question
+    const response = await axios({
+      method: "post",
+      url: "https://cs467quizcreation.wl.r.appspot.com/question",
+      data: {
+        type: 1,
+        points: parseInt(points),
+        question: question,
+        answer: questionAnswer,
+      },
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    console.log(response.data);
+
+    // once post request is complete - reset the form
     props.setQuestionAdded(true);
     props.setQuestionType(0);
-    console.log(question);
-    console.log(radioButton);
   };
 
   // on clicking cancel button in form
@@ -27,7 +45,11 @@ function TrueFalseQuestion(props) {
   };
 
   const radioButtonInputHandler = (event) => {
-    setRadioButton(true);
+    setQuestionAnswer(true);
+  };
+
+  const pointsInputChangeHandler = (event) => {
+    setPoints(event.target.value);
   };
 
   return (
@@ -61,6 +83,16 @@ function TrueFalseQuestion(props) {
                   name="formHorizontalRadios"
                   id="false"
                 />
+                <Form.Group className="mb-3" controlId="formTimeLimit">
+                  <Form.Label>Points</Form.Label>
+                  <Form.Control
+                    onChange={pointsInputChangeHandler}
+                    placeholder="Points"
+                    required
+                    type="number"
+                    min="0"
+                  />
+                </Form.Group>
                 <Row>
                   <Col className="text-center">
                     <Button
