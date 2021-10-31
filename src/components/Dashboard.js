@@ -1,10 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserProvider";
 
 function Dashboard() {
-  const { login, logout, user, loading, setLoading, setError, error } =
-    useContext(UserContext);
+  const { login, logout, user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const getUser = async () => {
     try {

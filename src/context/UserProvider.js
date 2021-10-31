@@ -11,9 +11,6 @@ function UserProvider({ children }) {
     authId: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
   const login = ({ id, name, email, authId }) => {
     setUser({
       id,
@@ -35,9 +32,7 @@ function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider
-      value={{ user, login, logout, loading, error, setError, setLoading }}
-    >
+    <UserContext.Provider value={{ user, login, logout }}>
       {children}
     </UserContext.Provider>
   );
