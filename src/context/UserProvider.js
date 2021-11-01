@@ -7,17 +7,13 @@ function UserProvider({ children }) {
     id: "",
     name: "",
     email: "",
-    auth: false,
-    authId: "",
   });
 
-  const login = ({ id, name, email, authId }) => {
+  const login = ({ id, name, email }) => {
     setUser({
       id,
       name,
       email,
-      auth: true,
-      authId,
     });
   };
 
@@ -26,8 +22,6 @@ function UserProvider({ children }) {
       id: "",
       name: "",
       email: "",
-      auth: false,
-      authId: "",
     });
   };
 
