@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 function Home() {
-  const [cookies, setCookie] = useCookies(["userId"]);
+  const [cookies] = useCookies(["userId"]);
 
   let employee_id = "5660188736487424";
 
