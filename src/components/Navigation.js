@@ -7,7 +7,6 @@ function Navigation() {
 
   const handleLogoutButton = () => {
     removeCookie("id");
-    localStorage.removeItem("quiz");
     window.location.href = `${process.env.REACT_APP_SERVER_HOST}/logout`;
   };
 

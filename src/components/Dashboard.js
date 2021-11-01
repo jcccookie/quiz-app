@@ -22,6 +22,7 @@ function Dashboard() {
   const [cookies, setCookie] = useCookies(["userId"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [quiz, setQuiz] = useState([]);
 
   const fetchUser = async () => {
     try {
@@ -47,7 +48,7 @@ function Dashboard() {
         axios.get(quiz.self)
       );
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
-      localStorage.setItem("quiz", JSON.stringify(quizzes));
+      setQuiz(quizzes);
     } catch (err) {
       setError(err);
     }
@@ -55,9 +56,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("quiz") === null) {
-      fetchUser();
-    }
+    fetchUser();
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -82,7 +81,7 @@ function Dashboard() {
           </tr>
         </thead>
         <tbody>
-          {JSON.parse(localStorage.getItem("quiz"))?.map((quiz, index) => (
+          {quiz?.map((quiz, index) => (
             <tr>
               <td>{index + 1}</td>
               <td>{quiz.title}</td>
