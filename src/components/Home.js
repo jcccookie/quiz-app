@@ -19,14 +19,7 @@ function Home() {
   return (
     <Container>
       <h1>Create your first quiz!</h1>
-      <Button
-        href={
-          cookies.auth
-            ? `/newQuiz/${employee_id}`
-            : `${process.env.REACT_APP_SERVER_HOST}/auth/google`
-        }
-        className="text-uppercase"
-      >
+      <Button href={`/newQuiz/${employee_id}`} className="text-uppercase">
         Create Quiz
       </Button>
     </Container>

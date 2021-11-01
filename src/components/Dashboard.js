@@ -36,7 +36,6 @@ function Dashboard() {
         .catch((err) => console.error(err));
 
       const cookieConfig = { path: "/", maxAge: 36000 };
-
       setCookie("id", employee.data.id, cookieConfig);
 
       const employeeWithQuiz = await axios.get(
@@ -47,9 +46,7 @@ function Dashboard() {
       const quizLinks = employeeWithQuiz.data.quiz.map((quiz) =>
         axios.get(quiz.self)
       );
-
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
-
       localStorage.setItem("quiz", JSON.stringify(quizzes));
     } catch (err) {
       setError(err);
@@ -93,7 +90,7 @@ function Dashboard() {
               <td>{quiz.question.length}</td>
               <td>
                 <Button variant="success" disabled={quiz.question.length === 0}>
-                  Edit Question
+                  Preview
                 </Button>
               </td>
               <td>
