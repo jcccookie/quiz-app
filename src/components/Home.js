@@ -26,6 +26,7 @@ function Home() {
             : `${process.env.REACT_APP_SERVER_HOST}/auth/google`
         }
         className="text-uppercase"
+        size="lg"
       >
         Create Quiz
       </Button>

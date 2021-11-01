@@ -69,8 +69,11 @@ function Dashboard() {
   return (
     <Container>
       <CreateDiv>
-        <h1>Create your first quiz!</h1>
-        <Button href={`/newQuiz/${tempEmployeeId}`} className="text-uppercase">
+        <Button
+          href={`/newQuiz/${tempEmployeeId}`}
+          className="text-uppercase"
+          size="lg"
+        >
           Create Quiz
         </Button>
       </CreateDiv>
