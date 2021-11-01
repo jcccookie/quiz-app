@@ -69,11 +69,7 @@ function Dashboard() {
   return (
     <Container>
       <CreateDiv>
-        <Button
-          href={`/newQuiz/${tempEmployeeId}`}
-          className="text-uppercase"
-          size="lg"
-        >
+        <Button href={`/newQuiz/${tempEmployeeId}`} className="text-uppercase">
           Create Quiz
         </Button>
       </CreateDiv>
@@ -96,7 +92,9 @@ function Dashboard() {
               <td>{quiz.timeLimit}</td>
               <td>{quiz.question.length}</td>
               <td>
-                <Button variant="success">Edit Question</Button>
+                <Button variant="success" disabled={quiz.question.length === 0}>
+                  Edit Question
+                </Button>
               </td>
               <td>
                 <Button variant="danger">Delete Quiz</Button>
