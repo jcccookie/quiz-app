@@ -4,6 +4,7 @@ import { useState } from "react";
 import NewQuizBasicInfoForm from "./NewQuizBasicInfoForm";
 import NewQuestion from "./NewQuestion";
 import TrueFalseQuestion from "./TrueFalseQuestion";
+import FreeFormQuestion from "./FreeFormQuestion";
 
 function NewQuiz() {
   // let { employee_id } = useParams();
@@ -45,6 +46,14 @@ function NewQuiz() {
           <br />
           {questionType === 1 && (
             <TrueFalseQuestion
+              setQuestionAdded={setQuestionAdded}
+              setQuestionType={setQuestionType}
+              quizID={quizID}
+              setQuiz={setQuiz}
+            />
+          )}
+          {questionType === 4 && (
+            <FreeFormQuestion
               setQuestionAdded={setQuestionAdded}
               setQuestionType={setQuestionType}
               quizID={quizID}
