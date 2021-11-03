@@ -5,6 +5,8 @@ import NewQuizBasicInfoForm from "./NewQuizBasicInfoForm";
 import NewQuestion from "./NewQuestion";
 import TrueFalseQuestion from "./TrueFalseQuestion";
 import FreeFormQuestion from "./FreeFormQuestion";
+import CheckAllThatApplyQuestion from "./CheckAllThatApplyQuestion";
+import "../index.css";
 
 function NewQuiz() {
   // let { employee_id } = useParams();
@@ -17,7 +19,7 @@ function NewQuiz() {
   const [quiz, setQuiz] = useState([]);
 
   return (
-    <Container className="question">
+    <Container className="content">
       <Row>
         <Col>
           {quizID.length === 0 ? (
@@ -46,6 +48,14 @@ function NewQuiz() {
           <br />
           {questionType === 1 && (
             <TrueFalseQuestion
+              setQuestionAdded={setQuestionAdded}
+              setQuestionType={setQuestionType}
+              quizID={quizID}
+              setQuiz={setQuiz}
+            />
+          )}
+          {questionType === 3 && (
+            <CheckAllThatApplyQuestion
               setQuestionAdded={setQuestionAdded}
               setQuestionType={setQuestionType}
               quizID={quizID}

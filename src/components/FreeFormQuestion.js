@@ -8,6 +8,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useState } from "react";
+import "../index.css";
 const axios = require("axios").default;
 
 function FreeFormQuestion(props) {
@@ -76,7 +77,7 @@ function FreeFormQuestion(props) {
   };
 
   return (
-    <Container>
+    <Container className="question">
       <Row>
         <Col>
           <Card>
