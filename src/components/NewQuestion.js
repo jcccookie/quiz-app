@@ -21,25 +21,21 @@ function NewQuestion(props) {
 
   // new True False Question
   function newTrueFalseQuestion() {
-    console.log("new true false question");
     props.setQuestionType(1);
   }
 
   // new multiple choice question
   function newMultipleChoiceQuestion() {
-    console.log("new multiple choice question");
     props.setQuestionType(2);
   }
 
   // new check all that apply question
   function newCheckAllThatApplyQuestion() {
-    console.log("new check all that apply question");
     props.setQuestionType(3);
   }
 
   // new free form question
   function newFreeFormQuestion() {
-    console.log("new free form question");
     props.setQuestionType(4);
   }
 

@@ -54,7 +54,6 @@ function TrueFalseQuestion(props) {
 
     // setQuiz with updated quiz
     props.setQuiz(res["data"]);
-    console.log(res["data"]);
 
     // once post request is complete - reset the form
     props.setQuestionAdded(true);

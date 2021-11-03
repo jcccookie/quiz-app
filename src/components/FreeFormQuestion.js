@@ -53,7 +53,6 @@ function FreeFormQuestion(props) {
 
     // setQuiz with updated quiz
     props.setQuiz(res["data"]);
-    console.log(res["data"]);
 
     // once post request is complete - reset the form
     props.setQuestionAdded(true);
@@ -81,7 +80,7 @@ function FreeFormQuestion(props) {
       <Row>
         <Col>
           <Card>
-            <Card.Header>New True/False Question</Card.Header>
+            <Card.Header>New Free Form Question</Card.Header>
             <Card.Body>
               <Form onSubmit={formSubmissionHandler}>
                 <Form.Group controlId="formBasicEmail">
