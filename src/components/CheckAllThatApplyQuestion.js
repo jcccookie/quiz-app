@@ -14,13 +14,7 @@ const axios = require("axios").default;
 
 function CheckAllThatApplyQuestion(props) {
   // starting answer object
-  let startingAnswers = [
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-  ];
+  let startingAnswers = [{ answer: "", correct: false }];
 
   // state
   const [question, setQuestion] = useState("");
@@ -104,6 +98,13 @@ function CheckAllThatApplyQuestion(props) {
       const newAnswer = [...answer];
       newAnswer[index]["answer"] = event.target.value;
       setAnswer(newAnswer);
+
+      // see if new answer line needs to be added
+      const finalIndex = answer.length - 1;
+      if (answer[finalIndex]["answer"].length !== 0) {
+        const addAnswer = [...answer, { answer: "", correct: false }];
+        setAnswer(addAnswer);
+      }
     }
 
     console.log(answer);
@@ -127,30 +128,15 @@ function CheckAllThatApplyQuestion(props) {
                   />
                 </Form.Group>
                 <br />
-                <CheckAllThatApplyAnswer
-                  index={0}
-                  handleAnswerChange={handleAnswerChange}
-                />
-                <br />
-                <CheckAllThatApplyAnswer
-                  index={1}
-                  handleAnswerChange={handleAnswerChange}
-                />
-                <br />
-                <CheckAllThatApplyAnswer
-                  index={2}
-                  handleAnswerChange={handleAnswerChange}
-                />
-                <br />
-                <CheckAllThatApplyAnswer
-                  index={3}
-                  handleAnswerChange={handleAnswerChange}
-                />
-                <br />
-                <CheckAllThatApplyAnswer
-                  index={4}
-                  handleAnswerChange={handleAnswerChange}
-                />
+                {answer.map((ans, index) => {
+                  return (
+                    <CheckAllThatApplyAnswer
+                      key={index.toString()}
+                      index={index}
+                      handleAnswerChange={handleAnswerChange}
+                    />
+                  );
+                })}
                 <Form.Group className="mb-3" controlId="formTimeLimit">
                   <Form.Label>Points</Form.Label>
                   <Form.Control
