@@ -98,6 +98,7 @@ function TrueFalseQuestion(props) {
                     onChange={questionInputChangeHandler}
                   />
                 </Form.Group>
+                <br />
                 <Form.Check
                   type="radio"
                   label="True"
@@ -112,6 +113,7 @@ function TrueFalseQuestion(props) {
                   name="formHorizontalRadios"
                   id="false"
                 />
+                <br />
                 <Form.Group className="mb-3" controlId="formTimeLimit">
                   <Form.Label>Points</Form.Label>
                   <Form.Control

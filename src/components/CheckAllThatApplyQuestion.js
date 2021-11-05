@@ -8,14 +8,24 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useState } from "react";
+import CheckAllThatApplyAnswer from "./CheckAllThatApplyAnswer";
 import "../index.css";
 const axios = require("axios").default;
 
 function CheckAllThatApplyQuestion(props) {
+  // starting answer object
+  let startingAnswers = [
+    { answer: "", correct: false },
+    { answer: "", correct: false },
+    { answer: "", correct: false },
+    { answer: "", correct: false },
+    { answer: "", correct: false },
+  ];
+
   // state
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
-  const [questionAnswer, setQuestionAnswer] = useState([]);
+  const [answer, setAnswer] = useState(startingAnswers);
   const [loading, setLoading] = useState(false);
 
   // on submit button for form
@@ -31,7 +41,7 @@ function CheckAllThatApplyQuestion(props) {
         type: 3,
         points: parseInt(points),
         question: question,
-        answer: questionAnswer,
+        answer: answer,
       },
     }).catch((error) => {
       console.log(error);
@@ -73,12 +83,30 @@ function CheckAllThatApplyQuestion(props) {
     setQuestion(event.target.value);
   };
 
-  const radioButtonInputHandler = (event) => {
-    setQuestionAnswer(true);
-  };
-
+  // set points when points are typed in
   const pointsInputChangeHandler = (event) => {
     setPoints(event.target.value);
+  };
+
+  // set answer when an answer changes
+  const handleAnswerChange = (event) => {
+    // get index of answer being changed
+    const index = event.target.id[0];
+
+    // if checkbox has been updated - update that in answer object
+    if (event.target.id[1] === "c") {
+      const newAnswer = [...answer];
+      newAnswer[index]["correct"] = event.target.checked;
+      setAnswer(newAnswer);
+
+      // else answer has been updated - update that in answer object
+    } else {
+      const newAnswer = [...answer];
+      newAnswer[index]["answer"] = event.target.value;
+      setAnswer(newAnswer);
+    }
+
+    console.log(answer);
   };
 
   return (
@@ -99,51 +127,30 @@ function CheckAllThatApplyQuestion(props) {
                   />
                 </Form.Group>
                 <br />
-                <Form.Group controlId="formBasicEmail">
-                  <Row className="align-items-center">
-                    <Form.Label>Answers</Form.Label>
-                    <Col xs="auto">
-                      <Form.Check type="checkbox" id="1CheckBox" />
-                    </Col>
-                    <Col>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter answer"
-                        id="1Text"
-                        required
-                      />
-                    </Col>
-                  </Row>
-                  <br />
-                  <Row className="align-items-center">
-                    <Col xs="auto">
-                      <Form.Check type="checkbox" id="2CheckBox" />
-                    </Col>
-                    <Col>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter answer"
-                        id="2Text"
-                        required
-                      />
-                    </Col>
-                  </Row>
-                  <br />
-                  <Row className="align-items-center">
-                    <Col xs="auto">
-                      <Form.Check type="checkbox" id="3CheckBox" />
-                    </Col>
-                    <Col>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter answer"
-                        id="3Text"
-                        required
-                      />
-                    </Col>
-                  </Row>
-                </Form.Group>
+                <CheckAllThatApplyAnswer
+                  index={0}
+                  handleAnswerChange={handleAnswerChange}
+                />
                 <br />
+                <CheckAllThatApplyAnswer
+                  index={1}
+                  handleAnswerChange={handleAnswerChange}
+                />
+                <br />
+                <CheckAllThatApplyAnswer
+                  index={2}
+                  handleAnswerChange={handleAnswerChange}
+                />
+                <br />
+                <CheckAllThatApplyAnswer
+                  index={3}
+                  handleAnswerChange={handleAnswerChange}
+                />
+                <br />
+                <CheckAllThatApplyAnswer
+                  index={4}
+                  handleAnswerChange={handleAnswerChange}
+                />
                 <Form.Group className="mb-3" controlId="formTimeLimit">
                   <Form.Label>Points</Form.Label>
                   <Form.Control

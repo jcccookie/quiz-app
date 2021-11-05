@@ -93,6 +93,7 @@ function FreeFormQuestion(props) {
                     onChange={questionInputChangeHandler}
                   />
                 </Form.Group>
+                <br />
                 <Form.Group className="mb-3" controlId="formTimeLimit">
                   <Form.Label>Points</Form.Label>
                   <Form.Control
