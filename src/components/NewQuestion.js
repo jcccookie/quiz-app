@@ -86,7 +86,11 @@ function NewQuestion(props) {
                 </Col>
                 <Col className="text-center">
                   {!props.deleteLoading && (
-                    <Button variant="danger" onClick={props.deleteQuiz}>
+                    <Button
+                      variant="danger"
+                      onClick={props.deleteQuiz}
+                      disabled={!props.questionAdded}
+                    >
                       Delete Quiz
                     </Button>
                   )}
