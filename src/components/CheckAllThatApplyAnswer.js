@@ -18,7 +18,6 @@ function CheckAllThatApplyAnswer(props) {
           placeholder="Enter answer"
           id={props.index + "a"}
           onChange={props.handleAnswerChange}
-          required
         />
       </Col>
     </Row>

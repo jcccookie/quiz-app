@@ -7,7 +7,7 @@ import {
   Card,
   Spinner,
 } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CheckAllThatApplyAnswer from "./CheckAllThatApplyAnswer";
 import "../index.css";
 const axios = require("axios").default;
@@ -21,36 +21,47 @@ function CheckAllThatApplyQuestion(props) {
   const [points, setPoints] = useState(0);
   const [answer, setAnswer] = useState(startingAnswers);
   const [loading, setLoading] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   // on submit button for form
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
 
-    // send post request to database to create new question
-    const response = await axios({
-      method: "post",
-      url: "https://cs467quizcreation.wl.r.appspot.com/question",
-      data: {
-        type: 3,
-        points: parseInt(points),
-        question: question,
-        answer: answer,
-      },
-    }).catch((error) => {
-      console.log(error);
-    });
+    const filteredAnswers = answer.filter(
+      (answer) => answer["answer"].length !== 0
+    );
 
-    // add question to questions state
-    const { id } = response["data"];
-    let newQuestions = [...props.questions];
-    newQuestions.push(id);
-    props.setQuestions(newQuestions);
+    if (filteredAnswers.length === 0) {
+      console.log("no answers");
+      props.setQuestionType(0);
+      setLoading(false);
+    } else {
+      // send post request to database to create new question
+      const response = await axios({
+        method: "post",
+        url: "https://cs467quizcreation.wl.r.appspot.com/question",
+        data: {
+          type: 3,
+          points: parseInt(points),
+          question: question,
+          answer: filteredAnswers,
+        },
+      }).catch((error) => {
+        console.log(error);
+      });
 
-    // once post request is complete - reset the form
-    props.setQuestionAdded(true);
-    props.setQuestionType(0);
-    setLoading(false);
+      // add question to questions state
+      const { id } = response["data"];
+      let newQuestions = [...props.questions];
+      newQuestions.push(id);
+      props.setQuestions(newQuestions);
+
+      // once post request is complete - reset the form
+      props.setQuestionAdded(true);
+      props.setQuestionType(0);
+      setLoading(false);
+    }
   };
 
   // on clicking cancel button in form
@@ -93,9 +104,24 @@ function CheckAllThatApplyQuestion(props) {
         setAnswer(addAnswer);
       }
     }
-
-    console.log(answer);
   };
+
+  // make sure not all questions are empty
+  const allAnswersEmpty = () => {
+    const filteredAnswers = answer.filter(
+      (answer) => answer["answer"].length !== 0
+    );
+
+    if (filteredAnswers.length === 0) {
+      setSubmitDisabled(true);
+    } else {
+      setSubmitDisabled(false);
+    }
+  };
+
+  useEffect(() => {
+    allAnswersEmpty();
+  });
 
   return (
     <Container className="question">
@@ -121,6 +147,7 @@ function CheckAllThatApplyQuestion(props) {
                       key={index.toString()}
                       index={index}
                       handleAnswerChange={handleAnswerChange}
+                      answer={answer}
                     />
                   );
                 })}
@@ -141,10 +168,12 @@ function CheckAllThatApplyQuestion(props) {
                         className="text-center"
                         variant="primary"
                         type="submit"
+                        disabled={submitDisabled}
                       >
                         Submit
                       </Button>
                     )}
+
                     {loading && (
                       <Button variant="primary" type="submit">
                         <Spinner animation="border" role="status" size="sm" />
