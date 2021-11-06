@@ -25,7 +25,6 @@ function NewQuiz() {
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const submitQuiz = async () => {
-    console.log(questions);
     setSubmitLoading(true);
     // call POST request to api to make quiz
     const postQuizResponse = await axios({
@@ -41,12 +40,9 @@ function NewQuiz() {
       console.log(error);
     });
 
-    // setQuizID to newly returned id
-    console.log(postQuizResponse["data"]["id"]);
-
     // add all questions to quiz
     for (let i = 0; i < questions.length; i++) {
-      const res = await axios({
+      await axios({
         method: "post",
         url:
           "https://cs467quizcreation.wl.r.appspot.com/quiz/" +
@@ -56,7 +52,6 @@ function NewQuiz() {
       }).catch((error) => {
         console.log(error);
       });
-      console.log(res["data"]);
     }
     setSubmitLoading(false);
     // go back to home page after delete is done
