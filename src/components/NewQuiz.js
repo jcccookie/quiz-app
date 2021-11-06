@@ -6,6 +6,7 @@ import NewQuestion from "./NewQuestion";
 import TrueFalseQuestion from "./TrueFalseQuestion";
 import FreeFormQuestion from "./FreeFormQuestion";
 import CheckAllThatApplyQuestion from "./CheckAllThatApplyQuestion";
+import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
 import { useHistory } from "react-router-dom";
 import "../index.css";
 const axios = require("axios").default;
@@ -114,6 +115,14 @@ function NewQuiz() {
           <br />
           {questionType === 1 && (
             <TrueFalseQuestion
+              setQuestionAdded={setQuestionAdded}
+              setQuestionType={setQuestionType}
+              setQuestions={setQuestions}
+              questions={questions}
+            />
+          )}
+          {questionType === 2 && (
+            <MultipleChoiceQuestion
               setQuestionAdded={setQuestionAdded}
               setQuestionType={setQuestionType}
               setQuestions={setQuestions}
