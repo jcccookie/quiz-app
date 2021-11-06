@@ -8,17 +8,8 @@ import {
   Dropdown,
   Spinner,
 } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-const axios = require("axios").default;
 
 function NewQuestion(props) {
-  // for redirecting on submit quiz and delete quiz buttons
-  let history = useHistory();
-
-  // state
-  const [loadingDelete, setLoadingDelete] = useState(false);
-
   // new True False Question
   function newTrueFalseQuestion() {
     props.setQuestionType(1);
@@ -39,26 +30,6 @@ function NewQuestion(props) {
     props.setQuestionType(4);
   }
 
-  // delete quiz when delete quiz button clicked - redirect to create quiz page
-  const onClickDeleteQuiz = async () => {
-    setLoadingDelete(true);
-    // call DELETE request to api to delete quiz
-    const deleteURL =
-      "https://cs467quizcreation.wl.r.appspot.com/quiz/" + props.quizID;
-
-    await axios({
-      method: "delete",
-      url: deleteURL,
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    setLoadingDelete(false);
-
-    // go back to home page after delete is done
-    history.push("/");
-  };
-
   return (
     <Container className="content">
       <Row>
@@ -69,7 +40,7 @@ function NewQuestion(props) {
               <Card.Title>Quiz ID: {props.quizID}</Card.Title>
               <Card.Text>Time Limit: {props.timeLimit} minutes</Card.Text>
               <Card.Text>
-                Current Number of Questions: {props.quiz["question"].length}
+                Current Number of Questions: {props.questions.length}
               </Card.Text>
               <Row>
                 <Col className="text-center">
@@ -99,17 +70,21 @@ function NewQuestion(props) {
                   </DropdownButton>
                 </Col>
                 <Col className="text-center">
-                  <Button variant="success" disabled={!props.questionAdded}>
+                  <Button
+                    variant="success"
+                    disabled={!props.questionAdded}
+                    onClick={props.submitQuiz}
+                  >
                     Submit Quiz
                   </Button>
                 </Col>
                 <Col className="text-center">
-                  {!loadingDelete && (
-                    <Button variant="danger" onClick={onClickDeleteQuiz}>
+                  {!props.deleteLoading && (
+                    <Button variant="danger" onClick={props.deleteQuiz}>
                       Delete Quiz
                     </Button>
                   )}
-                  {loadingDelete && (
+                  {props.deleteLoading && (
                     <Button variant="danger" type="submit">
                       <Spinner animation="border" role="status" size="sm" />
                     </Button>

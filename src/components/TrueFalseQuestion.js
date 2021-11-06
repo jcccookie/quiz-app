@@ -37,24 +37,11 @@ function TrueFalseQuestion(props) {
       console.log(error);
     });
 
-    // add question to quiz
+    // add question to questions state
     const { id } = response["data"];
-
-    // send post request to database to add question to quiz
-    const addQuizQuestionURL =
-      "https://cs467quizcreation.wl.r.appspot.com/quiz/" +
-      props.quizID +
-      "/question/" +
-      id;
-    const res = await axios({
-      method: "post",
-      url: addQuizQuestionURL,
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    // setQuiz with updated quiz
-    props.setQuiz(res["data"]);
+    let newQuestions = [...props.questions];
+    newQuestions.push(id);
+    props.setQuestions(newQuestions);
 
     // once post request is complete - reset the form
     props.setQuestionAdded(true);
