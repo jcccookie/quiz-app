@@ -37,7 +37,6 @@ function NewQuestion(props) {
           <Card>
             <Card.Header>Quiz Title: {props.title}</Card.Header>
             <Card.Body>
-              <Card.Title>Quiz ID: {props.quizID}</Card.Title>
               <Card.Text>Time Limit: {props.timeLimit} minutes</Card.Text>
               <Card.Text>
                 Current Number of Questions: {props.questions.length}
@@ -70,13 +69,20 @@ function NewQuestion(props) {
                   </DropdownButton>
                 </Col>
                 <Col className="text-center">
-                  <Button
-                    variant="success"
-                    disabled={!props.questionAdded}
-                    onClick={props.submitQuiz}
-                  >
-                    Submit Quiz
-                  </Button>
+                  {!props.submitLoading && (
+                    <Button
+                      variant="success"
+                      disabled={!props.questionAdded}
+                      onClick={props.submitQuiz}
+                    >
+                      Submit Quiz
+                    </Button>
+                  )}
+                  {props.submitLoading && (
+                    <Button variant="success" type="submit">
+                      <Spinner animation="border" role="status" size="sm" />
+                    </Button>
+                  )}
                 </Col>
                 <Col className="text-center">
                   {!props.deleteLoading && (

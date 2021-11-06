@@ -21,8 +21,11 @@ function NewQuiz() {
   const [questions, setQuestions] = useState([]);
   const [basicInfoComplete, setBasicInfoComplete] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const submitQuiz = async () => {
+    console.log(questions);
+    setSubmitLoading(true);
     // call POST request to api to make quiz
     const postQuizResponse = await axios({
       method: "post",
@@ -54,6 +57,9 @@ function NewQuiz() {
       });
       console.log(res["data"]);
     }
+    setSubmitLoading(false);
+    // go back to home page after delete is done
+    history.push("/");
   };
 
   // delete quiz when delete quiz button clicked - redirect to create quiz page
@@ -80,7 +86,7 @@ function NewQuiz() {
     <Container className="content">
       <Row>
         <Col>
-          {!basicInfoComplete === 0 ? (
+          {basicInfoComplete === false ? (
             <NewQuizBasicInfoForm
               title={title}
               timeLimit={timeLimit}
@@ -98,6 +104,7 @@ function NewQuiz() {
               questions={questions}
               deleteQuiz={deleteQuiz}
               deleteLoading={deleteLoading}
+              submitLoading={submitLoading}
             />
           )}
         </Col>
