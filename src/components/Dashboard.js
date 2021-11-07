@@ -17,6 +17,7 @@ const CreateDiv = styled.div`
 `;
 
 const tempEmployeeId = 4652586724491264;
+// axios.defaults.withCredentials = true;
 
 function Dashboard() {
   const [cookies, setCookie] = useCookies(["userId"]);
@@ -28,11 +29,17 @@ function Dashboard() {
     try {
       setLoading(true);
       setError(null);
+      const profile = await axios
+        .get(`${process.env.REACT_APP_SERVER_HOST}/profile`, {
+          withCredentials: true,
+        })
+        .catch((err) => console.error(err));
+      console.log(profile);
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
-          email: cookies.email,
-          name: cookies.name,
+          email: profile.data._json.email,
+          name: profile.data.displayName,
         })
         .catch((err) => console.error(err));
 
@@ -49,6 +56,7 @@ function Dashboard() {
       );
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
       setQuiz(quizzes);
+      setCookie("auth", true, { path: "/", maxAge: 36000 });
     } catch (err) {
       setError(err);
     }
@@ -82,7 +90,7 @@ function Dashboard() {
         </thead>
         <tbody>
           {quiz?.map((quiz, index) => (
-            <tr>
+            <tr key={index}>
               <td>{index + 1}</td>
               <td>{quiz.title}</td>
               <td>{quiz.timeLimit}</td>
