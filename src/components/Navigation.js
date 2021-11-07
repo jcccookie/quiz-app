@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 
 function Navigation() {
-  const [cookies, setCookie, removeCookie] = useCookies(["userId"]);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleLogoutButton = () => {
     removeCookie("id");

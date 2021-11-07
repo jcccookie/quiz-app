@@ -20,7 +20,7 @@ const tempEmployeeId = 4652586724491264;
 // axios.defaults.withCredentials = true;
 
 function Dashboard() {
-  const [cookies, setCookie] = useCookies(["userId"]);
+  const [cookies, setCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quiz, setQuiz] = useState([]);
@@ -34,7 +34,6 @@ function Dashboard() {
           withCredentials: true,
         })
         .catch((err) => console.error(err));
-      console.log(profile);
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
