@@ -16,7 +16,7 @@ app.enable("trust proxy");
 app.use(cookieParser());
 dotenv.config();
 
-// app.use(express.static(path.join(__dirname, "../../build")));
+app.use(express.static(path.join(__dirname, "../../build")));
 
 const whitelist = [process.env.CLIENT_HOST];
 const corsOptions = {
