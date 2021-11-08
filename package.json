@@ -18,8 +18,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "REACT_APP_SERVER_HOST=http://localhost:8080 react-scripts start",
-    "start:host": "REACT_APP_SERVER_HOST=https://quiz-user-329402.uc.r.appspot.com react-scripts start",
+    "start:local": "REACT_APP_SERVER_HOST=http://localhost:8080 react-scripts start",
+    "start": "REACT_APP_SERVER_HOST=https://quiz-user-329402.uc.r.appspot.com react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
