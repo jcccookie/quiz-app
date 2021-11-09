@@ -8,6 +8,8 @@ function Navigation() {
   const handleLogoutButton = () => {
     removeCookie("id");
     removeCookie("auth");
+    removeCookie("name");
+    removeCookie("email");
     window.location.href = `${process.env.REACT_APP_SERVER_HOST}/logout`;
   };
 
@@ -23,7 +25,7 @@ function Navigation() {
           <Nav.Link
             href={
               cookies.auth
-                ? "/dashboard"
+                ? `/dashboard`
                 : `${process.env.REACT_APP_SERVER_HOST}/auth/google`
             }
           >

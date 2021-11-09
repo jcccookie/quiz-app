@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Table, Button } from "react-bootstrap";
@@ -24,26 +25,29 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quiz, setQuiz] = useState([]);
+  const { email, name } = useParams();
 
   const fetchUser = async () => {
     try {
       setLoading(true);
       setError(null);
-      const profile = await axios
-        .get(`${process.env.REACT_APP_SERVER_HOST}/profile`, {
-          withCredentials: true,
-        })
-        .catch((err) => console.error(err));
+      // const profile = await axios
+      //   .get(`${process.env.REACT_APP_SERVER_HOST}/profile`, {
+      //     withCredentials: true,
+      //   })
+      //   .catch((err) => console.error(err));
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
-          email: profile.data._json.email,
-          name: profile.data.displayName,
+          email: cookies.email ? cookies.email : email,
+          name: cookies.name ? cookies.name : name,
         })
         .catch((err) => console.error(err));
 
       const cookieConfig = { path: "/", maxAge: 36000 };
       setCookie("id", employee.data.id, cookieConfig);
+      name && setCookie("name", name, cookieConfig);
+      email && setCookie("email", email, cookieConfig);
 
       const employeeWithQuiz = await axios.get(
         // `https://cs467quizcreation.wl.r.appspot.com/employee/${employee.data.id}`
