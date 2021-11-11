@@ -24,7 +24,7 @@ function App() {
               <Home />
             </Route>
           ))}
-          <Route exact path="/dashboard/:email?/:name?">
+          <Route exact path="/dashboard/:email?/:name?/:session?">
             <Dashboard />
           </Route>
           <Route exact path="/login/error">
