@@ -21,6 +21,11 @@ code {
   top: 40px;
 }
 
+.getEmail {
+  position: absolute;
+  top: 60px;
+}
+
 .question {
   position: absolute;
   top: 300px;

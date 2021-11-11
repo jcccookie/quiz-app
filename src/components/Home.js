@@ -22,6 +22,9 @@ function Home() {
       <Button href={`/newQuiz/${employee_id}`} className="text-uppercase">
         Create Quiz
       </Button>
+      <Button href={`/emailQuiz/${employee_id}`} className="text-uppercase">
+        Email Quiz
+      </Button>
     </Container>
   );
 }

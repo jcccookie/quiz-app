@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Navigation from "./components/Navigation";
 import Dashboard from "./components/Dashboard";
 import NewQuiz from "./components/NewQuiz";
+import EmailQuiz from "./components/EmailQuiz";
 
 const Container = styled.div`
   display: flex;
@@ -31,6 +32,7 @@ function App() {
             Login Error!
           </Route>
           <Route path="/newQuiz/:employee_id" children={<NewQuiz />} />
+          <Route path="/emailQuiz/:employee_id" children={<EmailQuiz />} />
         </Container>
       </Switch>
     </>
