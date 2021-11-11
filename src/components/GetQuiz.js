@@ -38,7 +38,7 @@ function GetQuiz(props) {
 
   return (
     <Container>
-      {loading && <h1 className="quizSent">Loading...</h1>}
+      {loading && <h1 className="quizSubmitted">Loading...</h1>}
       {!loading && (
         <Container className="getEmail">
           <Row>
