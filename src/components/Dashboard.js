@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Table, Button } from "react-bootstrap";
@@ -19,7 +19,6 @@ const CreateDiv = styled.div`
 `;
 
 const tempEmployeeId = 4652586724491264;
-// axios.defaults.withCredentials = true;
 
 function Dashboard() {
   const [cookies, setCookie] = useCookies();
@@ -27,6 +26,8 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [quiz, setQuiz] = useState([]);
   const { email, name, session } = useParams();
+  const history = useHistory();
+
   const cookieConfig = { path: "/", maxAge: 3600 };
 
   const fetchUser = async () => {
@@ -34,7 +35,7 @@ function Dashboard() {
       setLoading(true);
       setError(null);
 
-      // await checkSession();
+      await checkSession();
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
@@ -62,11 +63,13 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchUser();
     name && setCookie("name", name, cookieConfig);
     email && setCookie("email", email, cookieConfig);
     session && setCookie("session", session, cookieConfig);
     setCookie("auth", true, cookieConfig);
+    history.push("/dashboard"); // delete params in the address bar of the browser
+
+    fetchUser();
   }, []);
 
   if (loading) return <div>Loading...</div>;
