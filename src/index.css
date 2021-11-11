@@ -30,3 +30,7 @@ code {
   position: absolute;
   top: 300px;
 }
+
+.quizSent {
+  text-align: center;
+}

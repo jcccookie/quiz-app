@@ -1,11 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Form,
-  Button,
-  Card,
-} from "react-bootstrap";
+import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Emails from "./Emails";
 import "../index.css";
@@ -17,7 +10,7 @@ function GetEmail(props) {
   // on submit button for form
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
-    console.log(props.emails);
+    props.setForm(2);
   };
 
   // set answer when an answer changes
