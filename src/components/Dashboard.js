@@ -34,7 +34,7 @@ function Dashboard() {
       setLoading(true);
       setError(null);
 
-      await checkSession();
+      // await checkSession();
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
