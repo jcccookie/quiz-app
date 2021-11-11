@@ -11,11 +11,10 @@ import { useState } from "react";
 import "../index.css";
 const axios = require("axios").default;
 
-function TrueFalseQuestion(props) {
+function FreeFormQuestion(props) {
   // state
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
-  const [questionAnswer, setQuestionAnswer] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // on submit button for form
@@ -28,10 +27,10 @@ function TrueFalseQuestion(props) {
       method: "post",
       url: "https://cs467quizcreation.wl.r.appspot.com/question",
       data: {
-        type: 1,
+        type: 4,
         points: parseInt(points),
         question: question,
-        answer: questionAnswer,
+        answer: "",
       },
     }).catch((error) => {
       console.log(error);
@@ -60,10 +59,6 @@ function TrueFalseQuestion(props) {
     setQuestion(event.target.value);
   };
 
-  const radioButtonInputHandler = (event) => {
-    setQuestionAnswer(true);
-  };
-
   const pointsInputChangeHandler = (event) => {
     setPoints(event.target.value);
   };
@@ -73,7 +68,7 @@ function TrueFalseQuestion(props) {
       <Row>
         <Col>
           <Card>
-            <Card.Header>New True/False Question</Card.Header>
+            <Card.Header>New Free Form Question</Card.Header>
             <Card.Body>
               <Form onSubmit={formSubmissionHandler}>
                 <Form.Group controlId="formBasicEmail">
@@ -85,21 +80,6 @@ function TrueFalseQuestion(props) {
                     onChange={questionInputChangeHandler}
                   />
                 </Form.Group>
-                <br />
-                <Form.Check
-                  type="radio"
-                  label="True"
-                  name="formHorizontalRadios"
-                  id="true"
-                  required
-                  onChange={radioButtonInputHandler}
-                />
-                <Form.Check
-                  type="radio"
-                  label="False"
-                  name="formHorizontalRadios"
-                  id="false"
-                />
                 <br />
                 <Form.Group className="mb-3" controlId="formTimeLimit">
                   <Form.Label>Points</Form.Label>
@@ -147,4 +127,4 @@ function TrueFalseQuestion(props) {
   );
 }
 
-export default TrueFalseQuestion;
+export default FreeFormQuestion;

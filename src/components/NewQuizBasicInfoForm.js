@@ -1,11 +1,11 @@
 import { Container, Form, Row, Col, Button, Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useState } from "react";
-const axios = require("axios").default;
+// const axios = require("axios").default;
 
 function NewQuizBasicInfoForm(props) {
   // employee_id params
-  let { employee_id } = useParams();
+  // let { employee_id } = useParams();
 
   // state
   const [loading, setLoading] = useState(false);
@@ -21,26 +21,27 @@ function NewQuizBasicInfoForm(props) {
   const formSubmissionHandlerBasicInformation = async (event) => {
     event.preventDefault();
     setLoading(true);
-
-    // call POST request to api to make quiz
-    const response = await axios({
-      method: "post",
-      url: "https://cs467quizcreation.wl.r.appspot.com/quiz",
-      data: {
-        employee: employee_id,
-        timeLimit: props.timeLimit,
-        title: props.title,
-        question: [],
-      },
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    props.setQuiz(response["data"]);
-
-    // set quizID to id returned from POST request
-    props.setQuizID(response["data"]["id"]);
+    props.setBasicInfoComplete(true);
     setLoading(false);
+
+    // // call POST request to api to make quiz
+    // const response = await axios({
+    //   method: "post",
+    //   url: "https://cs467quizcreation.wl.r.appspot.com/quiz",
+    //   data: {
+    //     employee: employee_id,
+    //     timeLimit: props.timeLimit,
+    //     title: props.title,
+    //     question: [],
+    //   },
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+
+    // props.setQuiz(response["data"]);
+
+    // // set quizID to id returned from POST request
+    // props.setQuizID(response["data"]["id"]);
   };
 
   return (
@@ -68,16 +69,16 @@ function NewQuizBasicInfoForm(props) {
               />
             </Form.Group>
             <Col className="text-center">
-            {!loading && (
-              <Button variant="primary" type="submit">
-                Add Questions
-              </Button>
-            )}
-            {loading && (
-              <Button variant="primary" type="submit">
-                <Spinner animation="border" role="status" size="sm" />
-              </Button>
-            )}
+              {!loading && (
+                <Button variant="primary" type="submit">
+                  Add Questions
+                </Button>
+              )}
+              {loading && (
+                <Button variant="primary" type="submit">
+                  <Spinner animation="border" role="status" size="sm" />
+                </Button>
+              )}
             </Col>
           </Form>
         </Col>
