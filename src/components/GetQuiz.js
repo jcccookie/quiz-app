@@ -19,6 +19,7 @@ function GetQuiz(props) {
       `https://cs467quizcreation.wl.r.appspot.com/employee/${employee_id}`
     );
 
+    // same from home page - load all the quizzes from that employer
     const quizLinks = employeeResponse.data.quiz.map((quiz) =>
       axios.get(quiz.self)
     );
@@ -53,7 +54,7 @@ function GetQuiz(props) {
                     {quizzes.map((quiz, index) => {
                       return (
                         <QuizSelector
-                          key={quiz.id.toString()}
+                          key={index.toString()}
                           quiz={quiz}
                           handleSelectionChange={handleSelectionChange}
                         />
