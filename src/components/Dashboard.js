@@ -4,6 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Table, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { checkSession } from "../helpers/session";
 
 const Container = styled.div`
   display: flex;
@@ -25,17 +26,15 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quiz, setQuiz] = useState([]);
-  const { email, name } = useParams();
+  const { email, name, session } = useParams();
+  const cookieConfig = { path: "/", maxAge: 3600 };
 
   const fetchUser = async () => {
     try {
       setLoading(true);
       setError(null);
-      // const profile = await axios
-      //   .get(`${process.env.REACT_APP_SERVER_HOST}/profile`, {
-      //     withCredentials: true,
-      //   })
-      //   .catch((err) => console.error(err));
+
+      await checkSession();
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
@@ -44,10 +43,7 @@ function Dashboard() {
         })
         .catch((err) => console.error(err));
 
-      const cookieConfig = { path: "/", maxAge: 36000 };
       setCookie("id", employee.data.id, cookieConfig);
-      name && setCookie("name", name, cookieConfig);
-      email && setCookie("email", email, cookieConfig);
 
       const employeeWithQuiz = await axios.get(
         // `https://cs467quizcreation.wl.r.appspot.com/employee/${employee.data.id}`
@@ -59,7 +55,6 @@ function Dashboard() {
       );
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
       setQuiz(quizzes);
-      setCookie("auth", true, { path: "/", maxAge: 36000 });
     } catch (err) {
       setError(err);
     }
@@ -68,10 +63,14 @@ function Dashboard() {
 
   useEffect(() => {
     fetchUser();
+    name && setCookie("name", name, cookieConfig);
+    email && setCookie("email", email, cookieConfig);
+    session && setCookie("session", session, cookieConfig);
+    setCookie("auth", true, cookieConfig);
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <Container>
