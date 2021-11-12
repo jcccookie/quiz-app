@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import { Table, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { checkSession } from "../helpers/session";
@@ -21,14 +21,13 @@ const CreateDiv = styled.div`
 const tempEmployeeId = 4652586724491264;
 
 function Dashboard() {
-  const [cookies, setCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quiz, setQuiz] = useState([]);
   const { email, name, session } = useParams();
   const history = useHistory();
 
-  const cookieConfig = { path: "/", maxAge: 3600 };
+  const cookieConfig = { path: "/", expires: 1 / 24 };
 
   const fetchUser = async () => {
     try {
@@ -39,12 +38,12 @@ function Dashboard() {
 
       const employee = await axios
         .post("https://cs467quizcreation.wl.r.appspot.com/employee", {
-          email: cookies.email ? cookies.email : email,
-          name: cookies.name ? cookies.name : name,
+          email: Cookies.get("email") ? Cookies.get("email") : email,
+          name: Cookies.get("name") ? Cookies.get("name") : name,
         })
         .catch((err) => console.error(err));
 
-      setCookie("id", employee.data.id, cookieConfig);
+      Cookies.set("id", employee.data.id, cookieConfig);
 
       const employeeWithQuiz = await axios.get(
         `https://cs467quizcreation.wl.r.appspot.com/employee/${employee.data.id}`
@@ -63,11 +62,14 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    name && setCookie("name", name, cookieConfig);
-    email && setCookie("email", email, cookieConfig);
-    session && setCookie("session", session, cookieConfig);
-    setCookie("auth", true, cookieConfig);
-    history.push("/dashboard"); // delete params in the address bar of the browser
+    name && Cookies.set("name", name, cookieConfig);
+    email && Cookies.set("email", email, cookieConfig);
+    session && Cookies.set("session", session, cookieConfig);
+    Cookies.set("auth", true, cookieConfig);
+
+    if (name && email && session) {
+      history.push("/dashboard"); // delete params in the address bar of the browser
+    }
 
     fetchUser();
   }, []);
@@ -78,7 +80,10 @@ function Dashboard() {
   return (
     <Container>
       <CreateDiv>
-        <Button href={`/newQuiz/${cookies.id}`} className="text-uppercase">
+        <Button
+          href={`/newQuiz/${Cookies.get("id")}`}
+          className="text-uppercase"
+        >
           Create Quiz
         </Button>
       </CreateDiv>

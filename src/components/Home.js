@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
-import { useCookies } from "react-cookie";
 
 const Container = styled.div`
   display: flex;
@@ -12,8 +11,6 @@ const Container = styled.div`
 `;
 
 function Home() {
-  const [cookies] = useCookies(["userId"]);
-
   let employee_id = "5660188736487424";
 
   return (
