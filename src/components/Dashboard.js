@@ -47,14 +47,15 @@ function Dashboard() {
       setCookie("id", employee.data.id, cookieConfig);
 
       const employeeWithQuiz = await axios.get(
-        // `https://cs467quizcreation.wl.r.appspot.com/employee/${employee.data.id}`
-        `https://cs467quizcreation.wl.r.appspot.com/employee/${tempEmployeeId}`
+        `https://cs467quizcreation.wl.r.appspot.com/employee/${employee.data.id}`
+        // `https://cs467quizcreation.wl.r.appspot.com/employee/${tempEmployeeId}`
       );
 
       const quizLinks = employeeWithQuiz.data.quiz.map((quiz) =>
         axios.get(quiz.self)
       );
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
+      console.log(quizzes);
       setQuiz(quizzes);
     } catch (err) {
       setError(err);
@@ -78,7 +79,7 @@ function Dashboard() {
   return (
     <Container>
       <CreateDiv>
-        <Button href={`/newQuiz/${tempEmployeeId}`} className="text-uppercase">
+        <Button href={`/newQuiz/${cookies.id}`} className="text-uppercase">
           Create Quiz
         </Button>
       </CreateDiv>
