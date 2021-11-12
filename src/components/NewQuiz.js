@@ -23,6 +23,7 @@ function NewQuiz() {
   const [basicInfoComplete, setBasicInfoComplete] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   const submitQuiz = async () => {
     setSubmitLoading(true);
@@ -54,8 +55,9 @@ function NewQuiz() {
       });
     }
     setSubmitLoading(false);
-    // go back to home page after delete is done
-    history.push("/");
+    setQuizSubmitted(true);
+    // say quiz submitted
+    // history.push("/");
   };
 
   // delete quiz when delete quiz button clicked - redirect to create quiz page
@@ -78,11 +80,15 @@ function NewQuiz() {
     history.push("/");
   };
 
+  if (quizSubmitted) {
+    return <h1 className="quizSubmitted">Quiz Submitted!</h1>;
+  }
+
   return (
     <Container className="content">
       <Row>
         <Col>
-          {basicInfoComplete === false ? (
+          {!quizSubmitted && basicInfoComplete === false && (
             <NewQuizBasicInfoForm
               title={title}
               timeLimit={timeLimit}
@@ -90,7 +96,8 @@ function NewQuiz() {
               setTimeLimit={setTimeLimit}
               setBasicInfoComplete={setBasicInfoComplete}
             />
-          ) : (
+          )}
+          {!quizSubmitted && basicInfoComplete === true && (
             <NewQuestion
               title={title}
               timeLimit={timeLimit}

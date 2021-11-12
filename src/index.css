@@ -21,7 +21,24 @@ code {
   top: 40px;
 }
 
+.getEmail {
+  position: absolute;
+  top: 60px;
+}
+
 .question {
   position: absolute;
   top: 300px;
+}
+
+.quizSent {
+  text-align: center;
+}
+
+.quizSubmitted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }
