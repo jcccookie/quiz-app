@@ -8,6 +8,7 @@ function Navigation() {
   const history = useHistory();
 
   const handleLogoutButton = () => {
+    console.log("logout");
     removeCookie("auth");
     removeCookie("name");
     removeCookie("email");

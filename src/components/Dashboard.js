@@ -55,7 +55,6 @@ function Dashboard() {
         axios.get(quiz.self)
       );
       const quizzes = (await Promise.all(quizLinks)).map((quiz) => quiz.data);
-      console.log(quizzes);
       setQuiz(quizzes);
     } catch (err) {
       setError(err);
