@@ -40,7 +40,7 @@ function Dashboard() {
 
     // setup email access to send link
     let url =
-      "https://adroit-marking-328200.uc.r.appspot.com/employee/" +
+      "https://adroit-marking-328200.uc.r.appspot.com/employer/" +
       employee_id +
       "/quiz/" +
       quizID +
