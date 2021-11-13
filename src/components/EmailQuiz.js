@@ -79,7 +79,7 @@ function Dashboard() {
           submitHandler={submitHandler}
         />
       )}
-      {form === 3 && <h1 className="quizSent">Emails Sent!</h1>}
+      {form === 3 && <h1 className="quizSent">Email Sent!</h1>}
       {form === 4 && <h1 className="quizSent">Loading...</h1>}
     </Container>
   );
