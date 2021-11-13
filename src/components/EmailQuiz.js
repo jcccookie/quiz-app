@@ -2,12 +2,13 @@ import { Container } from "react-bootstrap";
 import GetEmail from "./GetEmail";
 import GetQuiz from "./GetQuiz";
 import React, { useState } from "react";
-// import { useParams, useHistory } from "react-router";
-//import axios from "axios";
+import { useParams } from "react-router";
+import emailjs from "emailjs-com";
+import axios from "axios";
 
 function Dashboard() {
   //   let history = useHistory();
-  //   let { employee_id } = useParams();
+  let { employee_id } = useParams();
 
   // state
   const [emails, setEmails] = useState([""]);
@@ -21,7 +22,48 @@ function Dashboard() {
     console.log(filteredEmails);
     console.log(quizID);
 
+    // get candidate IDs for POST request
+    // const candidateResponse = await axios({
+    //   method: "post",
+    //   headers: { "Content-Type": "application/json" },
+    //   url:
+    //     "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
+    //     employee_id,
+    //   data: filteredEmails,
+    // })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
+
     // setup email access to send link
+    let url =
+      "https://adroit-marking-328200.uc.r.appspot.com/employee/" +
+      employee_id +
+      "/quiz/" +
+      quizID +
+      "/candidate/" +
+      "1234";
+    emailjs
+      .send(
+        "service_1hksa7o",
+        "template_9xmxynr",
+        {
+          quizurl: url,
+          toemail: filteredEmails[0],
+        },
+        "user_SRz0vpwIuUAmwJ94flLa3"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
     setForm(3);
   };
 

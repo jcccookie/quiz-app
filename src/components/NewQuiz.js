@@ -41,6 +41,8 @@ function NewQuiz() {
       console.log(error);
     });
 
+    console.log(postQuizResponse["data"]);
+
     // add all questions to quiz
     for (let i = 0; i < questions.length; i++) {
       await axios({
