@@ -20,11 +20,11 @@ const CreateDiv = styled.div`
 
 const tempEmployeeId = 4652586724491264;
 
-function Dashboard() {
+function Dashboard({ quiz, setQuiz }) {
   const [cookies, setCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [quiz, setQuiz] = useState([]);
+  // const [quiz, setQuiz] = useState([]);
   const { email, name, session } = useParams();
   const history = useHistory();
 
@@ -85,36 +85,48 @@ function Dashboard() {
           Create Quiz
         </Button>
       </CreateDiv>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Time Limit</th>
-            <th># of Question</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {quiz?.map((quiz, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{quiz.title}</td>
-              <td>{quiz.timeLimit}</td>
-              <td>{quiz.question.length}</td>
-              <td>
-                <Button variant="success" disabled={quiz.question.length === 0}>
-                  Preview
-                </Button>
-              </td>
-              <td>
-                <Button variant="danger">Delete Quiz</Button>
-              </td>
+      {quiz.length === 0 ? (
+        <div>No Quiz to Show</div>
+      ) : (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Time Limit</th>
+              <th># of Question</th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {quiz?.map((quiz, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{quiz.title}</td>
+                <td>{quiz.timeLimit}</td>
+                <td>{quiz.question.length}</td>
+                <td>
+                  <Button
+                    variant="success"
+                    disabled={quiz.question.length === 0}
+                    onClick={() => history.push(`/preview/${quiz.id}`)}
+                  >
+                    Preview
+                  </Button>
+                </td>
+                <td>
+                  <Button href={`/emailQuiz/${cookies.id}`}>Email Quiz</Button>
+                </td>
+                <td>
+                  <Button variant="danger">Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </Container>
   );
 }
