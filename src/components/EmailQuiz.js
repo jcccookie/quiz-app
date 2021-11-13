@@ -23,47 +23,54 @@ function Dashboard() {
     console.log(quizID);
 
     // get candidate IDs for POST request
-    // const candidateResponse = await axios({
-    //   method: "post",
-    //   headers: { "Content-Type": "application/json" },
-    //   url:
-    //     "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
-    //     employee_id,
-    //   data: filteredEmails,
-    // })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
+    const candidateResponse = await axios({
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      url:
+        "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
+        employee_id,
+      data: filteredEmails,
+    }).catch((error) => {
+      console.log(error);
+    });
 
-    // setup email access to send link
-    let url =
-      "https://adroit-marking-328200.uc.r.appspot.com/employer/" +
-      employee_id +
-      "/quiz/" +
-      quizID +
-      "/candidate/" +
-      "1234";
-    emailjs
-      .send(
-        "service_1hksa7o",
-        "template_9xmxynr",
-        {
-          quizurl: url,
-          toemail: filteredEmails[0],
-        },
-        "user_SRz0vpwIuUAmwJ94flLa3"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    // iterate through candidates data
+    const candidates = candidateResponse["data"];
+    for (const candidate in candidates) {
+      // candidate ID for Ryan API
+      let candidateID = candidates[candidate];
+
+      // link for candidate to take quiz
+      let url =
+        "https://adroit-marking-328200.uc.r.appspot.com/employer/" +
+        employee_id +
+        "/quiz/" +
+        quizID +
+        "/candidate/" +
+        candidateID;
+
+      // send email to that condidate
+      emailjs
+        .send(
+          "service_1hksa7o",
+          "template_9xmxynr",
+          {
+            quizurl: url,
+            toemail: candidate,
+          },
+          "user_SRz0vpwIuUAmwJ94flLa3"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    }
+
+    // once done sending tell user email has been sent
     setForm(3);
   };
 
