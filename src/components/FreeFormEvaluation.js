@@ -8,6 +8,19 @@ export default class FreeFormEvaluation extends React.Component {
         this.employerId = this.props.match.params.employerId;
         this.quizId = this.props.match.params.quizId;
         this.candidateId = this.props.match.params.candidateId;
+        
+        if (!this.checkCookie('auth')) {
+            window.location.href = `${process.env.REACT_APP_SERVER_HOST}/auth/google`;
+        }
+    }
+    
+    checkCookie(name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     fetchCandidate() {
