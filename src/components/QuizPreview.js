@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import styled from "styled-components";
+import QuestionTable from "./QuestionTable";
 
 const QUESTION_TYPE = {
   trueFalse: 1,
@@ -58,19 +59,28 @@ function QuizPreview({ quiz }) {
       }
     });
 
+    let tempTrueFalse = [];
+    let tempMultiple = [];
+    let tempCheckAll = [];
+    let tempFreeForm = [];
+
     if (question) {
       question.forEach((question) => {
         if (question.type === QUESTION_TYPE.trueFalse) {
-          !trueFalse.length && setTrueFalse([...trueFalse, question]);
+          tempTrueFalse = [...tempTrueFalse, question];
         } else if (question.type === QUESTION_TYPE.multiple) {
-          !multiple.length && setMultiple([...multiple, question]);
+          tempMultiple = [...tempMultiple, question];
         } else if (question.type === QUESTION_TYPE.checkAll) {
-          !checkAll.length && setCheckAll([...checkAll, question]);
+          tempCheckAll = [...tempCheckAll, question];
         } else if (question.type === QUESTION_TYPE.freeForm) {
-          !freeForm.length && setFreeForm([...freeForm, question]);
+          tempFreeForm = [...tempFreeForm, question];
         }
       });
     }
+    setTrueFalse([...trueFalse, ...tempTrueFalse]);
+    setMultiple([...multiple, ...tempMultiple]);
+    setCheckAll([...checkAll, ...tempCheckAll]);
+    setFreeForm([...freeForm, ...tempFreeForm]);
   }, []);
 
   return (
@@ -92,10 +102,10 @@ function QuizPreview({ quiz }) {
           Free Form {`${freeForm.length}`}
         </ListGroup.Item>
       </StyledListGroup>
-      {showTrueFalse && <div>TF</div>}
-      {showMultiple && <div>Multiple</div>}
-      {showCheckAll && <div>Check</div>}
-      {showFreeForm && <div>FreeForm</div>}
+      {showTrueFalse && <QuestionTable rows={trueFalse} type={1} />}
+      {showMultiple && <QuestionTable rows={multiple} type={2} />}
+      {showCheckAll && <QuestionTable rows={checkAll} type={3} />}
+      {showFreeForm && <QuestionTable rows={freeForm} type={4} />}
     </Container>
   );
 }
