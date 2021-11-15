@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 import { checkSession } from "../helpers/session";
 
@@ -27,8 +27,42 @@ function Dashboard({ quiz, setQuiz }) {
   // const [quiz, setQuiz] = useState([]);
   const { email, name, session } = useParams();
   const history = useHistory();
+  const [results, setResults] = useState([]);
 
   const cookieConfig = { path: "/", maxAge: 3600 };
+
+  // get quiz results for the results table
+  const getEmployeeClients = async (employee_id) => {
+    let clients = await axios.get(
+      "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
+        employee_id
+    );
+
+    let quizResults = [];
+
+    for (let i = 0; i < clients["data"].length; i++) {
+      const res = await axios.get(
+        "https://adroit-marking-328200.uc.r.appspot.com/candidate/" +
+          clients["data"][i]
+      );
+
+      if (res["data"]["quizzes"] !== "") {
+        const data = JSON.parse(res["data"]["quizzes"]);
+
+        for (let j = 0; j < data.length; j++) {
+          let results = {
+            name: res["data"]["name"],
+            title: data[j]["result"]["title"],
+            credit: data[j]["result"]["credit"],
+            points: data[j]["result"]["points"],
+            onTime: data[j]["result"]["onTime"],
+          };
+          quizResults.push(results);
+        }
+      }
+    }
+    setResults(quizResults);
+  };
 
   const fetchUser = async () => {
     try {
@@ -51,6 +85,9 @@ function Dashboard({ quiz, setQuiz }) {
         // `https://cs467quizcreation.wl.r.appspot.com/employee/${tempEmployeeId}`
       );
 
+      // get quiz results data
+      await getEmployeeClients(employee.data.id);
+
       const quizLinks = employeeWithQuiz.data.quiz.map((quiz) =>
         axios.get(quiz.self)
       );
@@ -59,6 +96,7 @@ function Dashboard({ quiz, setQuiz }) {
     } catch (err) {
       setError(err);
     }
+
     setLoading(false);
   };
 
@@ -127,6 +165,35 @@ function Dashboard({ quiz, setQuiz }) {
           </tbody>
         </Table>
       )}
+      <Col>
+        <Row>
+          <h3 className="quizSent">Quiz Results</h3>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Quiz Title</th>
+                <th>Credit</th>
+                <th>Total Points</th>
+                <th>On Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results?.map((result, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{result.name}</td>
+                  <td>{result.title}</td>
+                  <td>{result.credit}</td>
+                  <td>{result.points}</td>
+                  <td>{result.onTime ? "True" : "False"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Row>
+      </Col>
     </Container>
   );
 }
