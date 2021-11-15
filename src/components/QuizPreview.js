@@ -102,10 +102,10 @@ function QuizPreview({ quiz }) {
           Free Form {`${freeForm.length}`}
         </ListGroup.Item>
       </StyledListGroup>
-      {showTrueFalse && <QuestionTable rows={trueFalse} type={1} />}
-      {showMultiple && <QuestionTable rows={multiple} type={2} />}
-      {showCheckAll && <QuestionTable rows={checkAll} type={3} />}
-      {showFreeForm && <QuestionTable rows={freeForm} type={4} />}
+      {showTrueFalse && <QuestionTable rows={trueFalse} />}
+      {showMultiple && <QuestionTable rows={multiple} />}
+      {showCheckAll && <QuestionTable rows={checkAll} />}
+      {showFreeForm && <QuestionTable rows={freeForm} />}
     </Container>
   );
 }
