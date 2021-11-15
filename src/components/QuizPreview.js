@@ -30,10 +30,10 @@ function QuizPreview({ quiz }) {
   const [multiple, setMultiple] = useState([]);
   const [checkAll, setCheckAll] = useState([]);
   const [freeForm, setFreeForm] = useState([]);
-  const [showTrueFalse, setShowTrueFalse] = useState(false);
-  const [showMultiple, setShowMultiple] = useState(false);
-  const [showCheckAll, setShowCheckAll] = useState(false);
-  const [showFreeForm, setShowFreeForm] = useState(false);
+  const [showTrueFalse, setShowTrueFalse] = useState(true);
+  const [showMultiple, setShowMultiple] = useState(true);
+  const [showCheckAll, setShowCheckAll] = useState(true);
+  const [showFreeForm, setShowFreeForm] = useState(true);
 
   const { quizId } = useParams();
 
@@ -102,10 +102,10 @@ function QuizPreview({ quiz }) {
           Free Form {`${freeForm.length}`}
         </ListGroup.Item>
       </StyledListGroup>
-      {showTrueFalse && <QuestionTable rows={trueFalse} type={1} />}
-      {showMultiple && <QuestionTable rows={multiple} type={2} />}
-      {showCheckAll && <QuestionTable rows={checkAll} type={3} />}
-      {showFreeForm && <QuestionTable rows={freeForm} type={4} />}
+      {showTrueFalse && <QuestionTable rows={trueFalse} />}
+      {showMultiple && <QuestionTable rows={multiple} />}
+      {showCheckAll && <QuestionTable rows={checkAll} />}
+      {showFreeForm && <QuestionTable rows={freeForm} />}
     </Container>
   );
 }
