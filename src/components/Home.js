@@ -53,8 +53,9 @@ function Home() {
 
   return (
     <Container>
-      <h1>Create your first quiz!</h1>
-      <Button href={`/newQuiz/${employee_id}`} className="text-uppercase">
+      <h1>Software Programming Quiz</h1>
+      <h4>Sign to create your first quiz!</h4>
+      {/* <Button href={`/newQuiz/${employee_id}`} className="text-uppercase">
         Create Quiz
       </Button>
       <Col>
@@ -85,7 +86,7 @@ function Home() {
             </tbody>
           </Table>
         </Row>
-      </Col>
+      </Col> */}
     </Container>
   );
 }

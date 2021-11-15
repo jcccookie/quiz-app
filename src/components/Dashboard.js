@@ -31,13 +31,40 @@ function Dashboard({ quiz, setQuiz }) {
 
   const cookieConfig = { path: "/", maxAge: 3600 };
 
-  let temp_employeeId = "5092497743151104";
+  const rankEmployeeClientsByQuiz = (result) => {
+    let tempResults = [...result];
+
+    // sort results by quiz points
+    // source: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+    tempResults.sort((a, b) =>
+      a.points > b.points ? 1 : b.points > a.points ? -1 : 0
+    );
+
+    // sort results by title
+    // source: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+    tempResults.sort((a, b) =>
+      a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+    );
+
+    // add one if title has been seen
+    if (tempResults.length > 1) {
+      let prevQuizTitle = tempResults[0]["title"];
+      for (let i = 1; i < tempResults.length; i++) {
+        if (prevQuizTitle === tempResults[i]["title"]) {
+          tempResults[i]["rank"] = tempResults[i - 1]["rank"] + 1;
+        }
+        prevQuizTitle = tempResults[i]["title"];
+      }
+    }
+
+    setResults(tempResults);
+  };
 
   // get quiz results for the results table
   const getEmployeeClients = async (employee_id) => {
     let clients = await axios.get(
       "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
-        temp_employeeId
+        employee_id
     );
 
     let quizResults = [];
@@ -58,11 +85,15 @@ function Dashboard({ quiz, setQuiz }) {
             credit: data[j]["result"]["credit"],
             points: data[j]["result"]["points"],
             onTime: data[j]["result"]["onTime"],
+            rank: 1,
           };
           quizResults.push(results);
         }
       }
     }
+
+    // rank the quiz takers by results
+    rankEmployeeClientsByQuiz(quizResults);
     setResults(quizResults);
   };
 
@@ -176,7 +207,8 @@ function Dashboard({ quiz, setQuiz }) {
                 <th>#</th>
                 <th>Name</th>
                 <th>Quiz Title</th>
-                <th>Credit</th>
+                <th>Quiz Rank</th>
+                <th>Earned Points</th>
                 <th>Total Points</th>
                 <th>On Time</th>
               </tr>
@@ -187,6 +219,7 @@ function Dashboard({ quiz, setQuiz }) {
                   <td>{index + 1}</td>
                   <td>{result.name}</td>
                   <td>{result.title}</td>
+                  <td>{result.rank}</td>
                   <td>{result.credit}</td>
                   <td>{result.points}</td>
                   <td>{result.onTime ? "True" : "False"}</td>
