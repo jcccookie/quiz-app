@@ -18,7 +18,7 @@ const CreateDiv = styled.div`
   margin-bottom: 50px;
 `;
 
-const tempEmployeeId = 4652586724491264;
+const tempEmployeeId = 5092497743151104;
 
 function Dashboard({ quiz, setQuiz }) {
   const [cookies, setCookie] = useCookies();
@@ -31,11 +31,13 @@ function Dashboard({ quiz, setQuiz }) {
 
   const cookieConfig = { path: "/", maxAge: 3600 };
 
+  let temp_employeeId = "5092497743151104";
+
   // get quiz results for the results table
   const getEmployeeClients = async (employee_id) => {
     let clients = await axios.get(
       "https://adroit-marking-328200.uc.r.appspot.com/employercandidates/" +
-        employee_id
+        temp_employeeId
     );
 
     let quizResults = [];

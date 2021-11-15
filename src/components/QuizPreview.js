@@ -30,10 +30,10 @@ function QuizPreview({ quiz }) {
   const [multiple, setMultiple] = useState([]);
   const [checkAll, setCheckAll] = useState([]);
   const [freeForm, setFreeForm] = useState([]);
-  const [showTrueFalse, setShowTrueFalse] = useState(false);
-  const [showMultiple, setShowMultiple] = useState(false);
-  const [showCheckAll, setShowCheckAll] = useState(false);
-  const [showFreeForm, setShowFreeForm] = useState(false);
+  const [showTrueFalse, setShowTrueFalse] = useState(true);
+  const [showMultiple, setShowMultiple] = useState(true);
+  const [showCheckAll, setShowCheckAll] = useState(true);
+  const [showFreeForm, setShowFreeForm] = useState(true);
 
   const { quizId } = useParams();
 
