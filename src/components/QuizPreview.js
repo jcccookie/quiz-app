@@ -22,6 +22,12 @@ const Container = styled.div`
 
 const StyledListGroup = styled(ListGroup)`
   cursor: pointer;
+  margin-bottom: 15px;
+`;
+
+const StyledListGroupItem = styled(ListGroup.Item)`
+  background-color: ${(props) => (props.check ? "#1e90ff" : "white")};
+  color: ${(props) => (props.check ? "#f0f8ff" : "black")};
 `;
 
 function QuizPreview({ quiz }) {
@@ -36,12 +42,6 @@ function QuizPreview({ quiz }) {
   const [showFreeForm, setShowFreeForm] = useState(true);
 
   const { quizId } = useParams();
-
-  console.log(question);
-  console.log(trueFalse);
-  console.log(multiple);
-  console.log(checkAll);
-  console.log(freeForm);
 
   const handleShowAll = () => {
     setShowTrueFalse(true);
@@ -86,26 +86,61 @@ function QuizPreview({ quiz }) {
   return (
     <Container>
       <StyledListGroup horizontal>
-        <ListGroup.Item onClick={handleShowAll}>
+        <StyledListGroupItem
+          check={showTrueFalse && showMultiple && showCheckAll && showFreeForm}
+          onClick={handleShowAll}
+        >
           All {`${question.length}`}
-        </ListGroup.Item>
-        <ListGroup.Item onClick={() => setShowTrueFalse(!showTrueFalse)}>
+        </StyledListGroupItem>
+        <StyledListGroupItem
+          check={showTrueFalse}
+          onClick={() => setShowTrueFalse(!showTrueFalse)}
+        >
           True & False {`${trueFalse.length}`}
-        </ListGroup.Item>
-        <ListGroup.Item onClick={() => setShowMultiple(!showMultiple)}>
+        </StyledListGroupItem>
+        <StyledListGroupItem
+          check={showMultiple}
+          onClick={() => setShowMultiple(!showMultiple)}
+        >
           Multiple Choice {`${multiple.length}`}
-        </ListGroup.Item>
-        <ListGroup.Item onClick={() => setShowCheckAll(!showCheckAll)}>
+        </StyledListGroupItem>
+        <StyledListGroupItem
+          check={showCheckAll}
+          onClick={() => setShowCheckAll(!showCheckAll)}
+        >
           Check All That Apply {`${checkAll.length}`}
-        </ListGroup.Item>
-        <ListGroup.Item onClick={() => setShowFreeForm(!showFreeForm)}>
+        </StyledListGroupItem>
+        <StyledListGroupItem
+          check={showFreeForm}
+          onClick={() => setShowFreeForm(!showFreeForm)}
+        >
           Free Form {`${freeForm.length}`}
-        </ListGroup.Item>
+        </StyledListGroupItem>
       </StyledListGroup>
-      {showTrueFalse && <QuestionTable rows={trueFalse} />}
-      {showMultiple && <QuestionTable rows={multiple} />}
-      {showCheckAll && <QuestionTable rows={checkAll} />}
-      {showFreeForm && <QuestionTable rows={freeForm} />}
+      {showTrueFalse && (
+        <>
+          <h5 style={{ textAlign: "center" }}>True & False</h5>
+          <QuestionTable rows={trueFalse} />
+        </>
+      )}
+      {showMultiple && (
+        <>
+          <h5 style={{ textAlign: "center" }}>Multiple Choice</h5>
+          <QuestionTable rows={multiple} />
+        </>
+      )}
+      {showCheckAll && (
+        <>
+          <h5 style={{ textAlign: "center" }}>Check All That Apply</h5>
+          <QuestionTable rows={checkAll} />
+        </>
+      )}
+      {showFreeForm && (
+        <>
+          <h5 style={{ textAlign: "center" }}>Free Form</h5>
+          <QuestionTable rows={freeForm} />
+        </>
+      )}
     </Container>
   );
 }

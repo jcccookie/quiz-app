@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,13 +15,17 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-function Row({ row }) {
+const StyledTableContainer = styled(TableContainer)`
+  margin-bottom: 15px;
+`;
+
+function Row({ row, index }) {
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell />
+        <TableCell align="center">{index + 1}</TableCell>
         <TableCell component="th" scope="row">
           {row.question}
         </TableCell>
@@ -46,20 +51,24 @@ function Row({ row }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
+                <colgroup>
+                  <col style={{ width: "50%" }} />
+                  <col style={{ width: "50%" }} />
+                </colgroup>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Answer</TableCell>
-                    <TableCell>Correct</TableCell>
+                    <TableCell />
+                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {Array.isArray(row.answer) &&
                     row.answer.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell component="th" scope="row">
+                        <TableCell align="center" component="th" scope="row">
                           {item.answer}
                         </TableCell>
-                        <TableCell>
+                        <TableCell align="center">
                           {item.correct ? (
                             <CheckCircleOutlineIcon style={{ fill: "green" }} />
                           ) : (
@@ -80,22 +89,28 @@ function Row({ row }) {
 
 export default function QuestionTable({ rows }) {
   return (
-    <TableContainer component={Paper}>
+    <StyledTableContainer component={Paper}>
       <Table aria-label="collapsible table">
+        <colgroup>
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "30%" }} />
+          <col style={{ width: "10%" }} />
+          <col style={{ width: "10%" }} />
+        </colgroup>
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell align="center">#</TableCell>
             <TableCell align="center">Question</TableCell>
             <TableCell align="center">Answer</TableCell>
             <TableCell align="center">Points</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id} row={row} />
+          {rows.map((row, index) => (
+            <Row key={row.id} row={row} index={index} />
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </StyledTableContainer>
   );
 }
