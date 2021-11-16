@@ -98,7 +98,7 @@ function GetEmail(props) {
                       type="submit"
                       disabled={submitDisabled}
                     >
-                      Submit
+                      Select Quiz
                     </Button>
                   </Col>
                 </Row>

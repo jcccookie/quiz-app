@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./components/Home";
@@ -7,15 +7,18 @@ import Dashboard from "./components/Dashboard";
 import NewQuiz from "./components/NewQuiz";
 import EmailQuiz from "./components/EmailQuiz";
 import FreeFormEvaluation from "./components/FreeFormEvaluation";
+import QuizPreview from "./components/QuizPreview";
+
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50vh;
 `;
 
 function App() {
+  const [quiz, setQuiz] = useState([]);
+
   return (
     <>
       <Navigation />
@@ -27,7 +30,7 @@ function App() {
             </Route>
           ))}
           <Route exact path="/dashboard/:email?/:name?/:session?">
-            <Dashboard />
+            <Dashboard quiz={quiz} setQuiz={(quizzes) => setQuiz(quizzes)} />
           </Route>
           <Route path="/employer/:employerId?/quiz/:quizId?/candidate/:candidateId?" component={FreeFormEvaluation} />
           <Route exact path="/login/error">
@@ -35,6 +38,9 @@ function App() {
           </Route>
           <Route path="/newQuiz/:employee_id" children={<NewQuiz />} />
           <Route path="/emailQuiz/:employee_id" children={<EmailQuiz />} />
+          <Route exact path="/preview/:quizId">
+            <QuizPreview quiz={quiz} />
+          </Route>
         </Container>
       </Switch>
     </>

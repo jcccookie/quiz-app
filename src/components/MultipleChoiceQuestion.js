@@ -144,7 +144,7 @@ function MultipleQuestion(props) {
       <Row>
         <Col>
           <Card>
-            <Card.Header>New Check All That Apply Question</Card.Header>
+            <Card.Header>New Multiple Choice Question</Card.Header>
             <Card.Body>
               <Form onSubmit={formSubmissionHandler}>
                 <Form.Group controlId="formBasicEmail">
