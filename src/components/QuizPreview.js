@@ -16,7 +16,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: fixed;
   top: 100px;
 `;
 
