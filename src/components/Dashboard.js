@@ -133,6 +133,18 @@ function Dashboard({ quiz, setQuiz }) {
     setLoading(false);
   };
 
+  const deleteQuiz = async (quizId) => {
+    if (window.confirm("Are you sure you wish to delete this quiz?")) {
+      await axios
+        .delete(`https://cs467quizcreation.wl.r.appspot.com/quiz/${quizId}`)
+        .then((res) => {
+          const filteredQuiz = quiz.filter((quiz) => quiz.id !== quizId);
+          setQuiz(filteredQuiz);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   useEffect(() => {
     name && setCookie("name", name, cookieConfig);
     email && setCookie("email", email, cookieConfig);
@@ -191,7 +203,9 @@ function Dashboard({ quiz, setQuiz }) {
                   <Button href={`/emailQuiz/${cookies.id}`}>Email Quiz</Button>
                 </td>
                 <td>
-                  <Button variant="danger">Delete</Button>
+                  <Button variant="danger" onClick={() => deleteQuiz(quiz.id)}>
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}
