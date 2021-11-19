@@ -14,20 +14,23 @@ const Container = styled.div`
 `;
 
 const CreateDiv = styled.div`
+  display: flex;
+  flex-direction: column;
   text-align: center;
   margin-bottom: 50px;
+  gap: 10px;
 `;
 
 const tempEmployeeId = 5092497743151104;
 
-function Dashboard({ quiz, setQuiz }) {
+function Dashboard({ quiz, setQuiz, results, setResults }) {
   const [cookies, setCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // const [quiz, setQuiz] = useState([]);
   const { email, name, session } = useParams();
   const history = useHistory();
-  const [results, setResults] = useState([]);
+  // const [results, setResults] = useState([]);
 
   const cookieConfig = { path: "/", maxAge: 3600 };
 
@@ -77,6 +80,7 @@ function Dashboard({ quiz, setQuiz }) {
 
       if (res["data"]["quizzes"] !== "") {
         const data = JSON.parse(res["data"]["quizzes"]);
+        console.log(data);
 
         for (let j = 0; j < data.length; j++) {
           let results = {
@@ -86,6 +90,7 @@ function Dashboard({ quiz, setQuiz }) {
             points: data[j]["result"]["points"],
             onTime: data[j]["result"]["onTime"],
             rank: 1,
+            quizId: data[j]["result"]["id"],
           };
           quizResults.push(results);
         }
@@ -164,9 +169,8 @@ function Dashboard({ quiz, setQuiz }) {
   return (
     <Container>
       <CreateDiv>
-        <Button href={`/newQuiz/${cookies.id}`} className="text-uppercase">
-          Create Quiz
-        </Button>
+        <Button href={`/newQuiz/${cookies.id}`}>Create Quiz</Button>
+        <Button href={`/emailQuiz/${cookies.id}`}>Email Quiz</Button>
       </CreateDiv>
       {quiz.length === 0 ? (
         <div>No Quiz to Show</div>
@@ -200,7 +204,9 @@ function Dashboard({ quiz, setQuiz }) {
                   </Button>
                 </td>
                 <td>
-                  <Button href={`/emailQuiz/${cookies.id}`}>Email Quiz</Button>
+                  <Button onClick={() => history.push(`/result/${quiz.id}`)}>
+                    Quiz Result
+                  </Button>
                 </td>
                 <td>
                   <Button variant="danger" onClick={() => deleteQuiz(quiz.id)}>

@@ -8,6 +8,7 @@ import NewQuiz from "./components/NewQuiz";
 import EmailQuiz from "./components/EmailQuiz";
 import FreeFormEvaluation from "./components/FreeFormEvaluation";
 import QuizPreview from "./components/QuizPreview";
+import QuizResult from "./components/QuizResult";
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +20,9 @@ const Container = styled.div`
 
 function App() {
   const [quiz, setQuiz] = useState([]);
+  const [results, setResults] = useState([]);
+
+  console.log(results);
 
   return (
     <>
@@ -31,7 +35,12 @@ function App() {
             </Route>
           ))}
           <Route exact path="/dashboard/:email?/:name?/:session?">
-            <Dashboard quiz={quiz} setQuiz={(quizzes) => setQuiz(quizzes)} />
+            <Dashboard
+              quiz={quiz}
+              setQuiz={(quizzes) => setQuiz(quizzes)}
+              results={results}
+              setResults={(results) => setResults(results)}
+            />
           </Route>
           <Route
             path="/employer/:employerId?/quiz/:quizId?/candidate/:candidateId?"
@@ -44,6 +53,9 @@ function App() {
           <Route path="/emailQuiz/:employee_id" children={<EmailQuiz />} />
           <Route exact path="/preview/:quizId">
             <QuizPreview quiz={quiz} />
+          </Route>
+          <Route exact path="/result/:quizId">
+            <QuizResult results={results} />
           </Route>
         </Container>
       </Switch>
