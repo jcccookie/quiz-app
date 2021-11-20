@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router";
 import { Table } from "react-bootstrap";
 import styled from "styled-components";

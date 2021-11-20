@@ -80,7 +80,6 @@ function Dashboard({ quiz, setQuiz, results, setResults }) {
 
       if (res["data"]["quizzes"] !== "") {
         const data = JSON.parse(res["data"]["quizzes"]);
-        console.log(data);
 
         for (let j = 0; j < data.length; j++) {
           let results = {

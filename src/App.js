@@ -22,8 +22,6 @@ function App() {
   const [quiz, setQuiz] = useState([]);
   const [results, setResults] = useState([]);
 
-  console.log(results);
-
   return (
     <>
       <Navigation />
