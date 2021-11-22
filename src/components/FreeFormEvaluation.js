@@ -104,6 +104,11 @@ export default class FreeFormEvaluation extends React.Component {
                                     }
                                 }
                                 
+                                let totalCredit = 0;
+                                for (let i = 0; i < quiz.result.question.length; ++i) {
+                                    totalCredit += quiz.result.question[i].credit;
+                                }
+                                quiz.result.credit = totalCredit;
                             }
                         }
                         
